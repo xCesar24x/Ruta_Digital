@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "titulo": "Revenue Analytics Dashboard",
+    "categoria": "data",
+    "descripcion": "Visualización interactiva de flotas y KPI's financieros en tiempo real con modelado avanzado en BigQuery.",
+    "tecnologias": ["React", "TailwindCSS", "Power BI", "BigQuery"],
+    "imagen": "dashboard.png",
+    "demoUrl": "https://revenue-analytics.vercel.app",
+    "repoUrl": "https://github.com/xCesar24x/revenue-analytics"
+  },
+  {
+    "id": 2,
+    "titulo": "Automatización con Agentes IA",
+    "categoria": "ai",
+    "descripcion": "Ecosistema predictivo y modelado automatizado de datos utilizando Python y agentes cognitivos autónomos.",
+    "tecnologias": ["Python", "LangChain", "OpenAI API", "GitHub Actions"],
+    "imagen": "ai-automation.png",
+    "demoUrl": "https://ai-agents-workflow.vercel.app",
+    "repoUrl": "https://github.com/xCesar24x/ai-agent-workflow"
+  },
+  {
+    "id": 3,
+    "titulo": "Eecosistemas Web Premium",
+    "categoria": "web",
+    "descripcion": "Diseño de interfaces UI/UX sofisticadas y desarrollo frontend ultra-rápido optimizado para SEO.",
+    "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "Vercel"],
+    "imagen": "hero.png",
+    "demoUrl": "https://ruta-digital.vercel.app",
+    "repoUrl": "https://github.com/xCesar24x/Ruta_Digital"
+  },
+  {
+    "id": 4,
+    "titulo": "Pricing Strategy Optimization",
+    "categoria": "data",
+    "descripcion": "Herramienta analítica avanzada para optimización de precios dinámica y simulación de escenarios de margen.",
+    "tecnologias": ["Python", "Pandas", "Streamlit", "Vercel"],
+    "imagen": "logo.png",
+    "demoUrl": "https://pricing-strategy.vercel.app",
+    "repoUrl": "https://github.com/xCesar24x/pricing-strategy"
+  }
+]

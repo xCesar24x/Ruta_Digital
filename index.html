@@ -130,27 +130,20 @@ x|
             <div class="container">
                 <div class="section-header">
                     <h2 class="text-center">Casos de Éxito</h2>
-                    <p class="text-center">Soluciones reales. Resultados medibles.</p>
+                    <p class="text-center">Soluciones reales. Resultados medibles. Explora mis proyectos.</p>
                 </div>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item" data-aos="fade-up">
-                        <div class="portfolio-img">
-                            <img src="dashboard.png" alt="Dashboard Analytics">
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>Revenue Analytics Dashboard</h3>
-                            <p>Visualización interactiva de flotas y KPI's financieros.</p>
-                        </div>
-                    </div>
-                    <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
-                        <div class="portfolio-img">
-                            <img src="ai-automation.png" alt="AI Workflow">
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>Automatización con Agentes IA</h3>
-                            <p>Ecosistema predictivo y modelado automatizado de datos.</p>
-                        </div>
-                    </div>
+
+                <!-- Portfolio Filters -->
+                <div class="portfolio-filters" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="web">Web Apps</button>
+                    <button class="filter-btn" data-filter="ai">AI & Automatización</button>
+                    <button class="filter-btn" data-filter="data">Data & Analytics</button>
+                </div>
+
+                <!-- Dynamic Portfolio Grid -->
+                <div class="portfolio-grid" id="portfolio-container" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Dynamic project cards will be loaded here via JS -->
                 </div>
             </div>
         </section>
