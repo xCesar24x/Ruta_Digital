@@ -302,7 +302,103 @@ x|
                 </div>
             </div>
         </section>
+        <!-- Cotizador Interactivo -->
+        <section id="cotizador" class="cotizador-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="text-center">Calcula tu <span class="text-gradient">Inversión</span></h2>
+                    <p class="text-center">Transparencia total. Selecciona los módulos que tu negocio necesita y obtén un estimado al instante.</p>
+                </div>
 
+                <div class="calculator-grid">
+                    <div class="calculator-options">
+                        <!-- Step 1: Base -->
+                        <div class="calc-step" data-aos="fade-right">
+                            <h3>1. Ecosistema Base</h3>
+                            <div class="options-group radio-group">
+                                <label class="calc-card radio-card active">
+                                    <input type="radio" name="base_plan" value="500" checked data-name="Landing Page Premium">
+                                    <div class="card-inner">
+                                        <i data-lucide="layout-template"></i>
+                                        <h4>Landing Page Premium</h4>
+                                        <p>Sitio web de alta conversión de una sola página con diseño exclusivo.</p>
+                                    </div>
+                                </label>
+                                <label class="calc-card radio-card">
+                                    <input type="radio" name="base_plan" value="900" data-name="Plataforma con Reservas">
+                                    <div class="card-inner">
+                                        <i data-lucide="calendar-check"></i>
+                                        <h4>Plataforma con Reservas</h4>
+                                        <p>Ecosistema multicapa con sistema de reservas o cotizador dinámico integrado.</p>
+                                    </div>
+                                </label>
+                                <label class="calc-card radio-card">
+                                    <input type="radio" name="base_plan" value="1500" data-name="Solución Corporativa Custom">
+                                    <div class="card-inner">
+                                        <i data-lucide="briefcase"></i>
+                                        <h4>Solución Corporativa Custom</h4>
+                                        <p>Plataformas robustas, intranets o sistemas web complejos a la medida.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Add-ons -->
+                        <div class="calc-step" data-aos="fade-right" data-aos-delay="100">
+                            <h3>2. Add-ons Tecnológicos</h3>
+                            <div class="options-group checkbox-group">
+                                <label class="calc-card checkbox-card">
+                                    <input type="checkbox" name="addons" value="400" data-name="Asistente de Inteligencia Artificial">
+                                    <div class="card-inner">
+                                        <i data-lucide="bot"></i>
+                                        <div class="calc-info">
+                                            <h4>Asistente IA (Chatbot)</h4>
+                                            <p>Atención 24/7 autónoma.</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="calc-card checkbox-card">
+                                    <input type="checkbox" name="addons" value="600" data-name="Dashboard PowerBI">
+                                    <div class="card-inner">
+                                        <i data-lucide="pie-chart"></i>
+                                        <div class="calc-info">
+                                            <h4>Dashboard Financiero</h4>
+                                            <p>Inteligencia de negocios en tiempo real.</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="calc-card checkbox-card">
+                                    <input type="checkbox" name="addons" value="250" data-name="Automatización de Procesos">
+                                    <div class="card-inner">
+                                        <i data-lucide="cpu"></i>
+                                        <div class="calc-info">
+                                            <h4>Automatización (RPA)</h4>
+                                            <p>Flujos de trabajo automatizados.</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Summary -->
+                    <div class="calculator-summary" data-aos="fade-left">
+                        <div class="summary-box glass-panel">
+                            <h3>Resumen de Inversión</h3>
+                            <ul id="summary-list" class="summary-list">
+                                <li><span>Landing Page Premium</span> <span>$500</span></li>
+                            </ul>
+                            <div class="summary-total">
+                                <span>Inversión Estimada (USD)</span>
+                                <strong id="total-price" class="text-gradient">$500</strong>
+                            </div>
+                            <p class="summary-disclaimer">* Valores indicativos. El precio final puede variar según los requerimientos técnicos.</p>
+                            <a href="#" id="btn-cotizar-wa" class="btn-main w-full justify-center" target="_blank" rel="noopener noreferrer">Bloquear Precio por WhatsApp <i data-lucide="message-circle"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- About Section -->
         <section id="nosotros" class="about">
             <div class="container about-flex">

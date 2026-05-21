@@ -154,4 +154,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
         statsObserver.observe(statsGrid);
     }
+
+    // Calculator Logic
+    const baseRadios = document.querySelectorAll('input[name="base_plan"]');
+    const addonCheckboxes = document.querySelectorAll('input[name="addons"]');
+    const summaryList = document.getElementById('summary-list');
+    const totalPriceEl = document.getElementById('total-price');
+    const btnCotizarWa = document.getElementById('btn-cotizar-wa');
+
+    const updateCalculator = () => {
+        if (!summaryList) return;
+        
+        let total = 0;
+        summaryList.innerHTML = '';
+        let itemsForWa = [];
+
+        // Base plan
+        const selectedBase = document.querySelector('input[name="base_plan"]:checked');
+        if (selectedBase) {
+            const val = parseInt(selectedBase.value);
+            const name = selectedBase.getAttribute('data-name');
+            total += val;
+            itemsForWa.push(name);
+            summaryList.innerHTML += `<li><span>${name}</span> <span>$${val}</span></li>`;
+        }
+
+        // Addons
+        addonCheckboxes.forEach(cb => {
+            if (cb.checked) {
+                const val = parseInt(cb.value);
+                const name = cb.getAttribute('data-name');
+                total += val;
+                itemsForWa.push(name);
+                summaryList.innerHTML += `<li><span>+ ${name}</span> <span>$${val}</span></li>`;
+            }
+        });
+
+        // Update Total
+        totalPriceEl.innerText = `$${total}`;
+
+        // Update WhatsApp Link
+        const phoneNumber = '50684349442'; // Número configurado
+        const message = `Hola Ruta Digital. Me interesa cotizar una solución tecnológica.\n\nHe seleccionado el siguiente ecosistema en su sitio web:\n- ${itemsForWa.join('\n- ')}\n\nInversión estimada: $${total} USD.\n\n¿Podemos agendar una llamada para conversar los detalles?`;
+        btnCotizarWa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    };
+
+    if (baseRadios.length > 0) {
+        // Initial setup
+        updateCalculator();
+
+        // Listeners
+        baseRadios.forEach(radio => radio.addEventListener('change', updateCalculator));
+        addonCheckboxes.forEach(cb => cb.addEventListener('change', updateCalculator));
+    }
 });
