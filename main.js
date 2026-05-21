@@ -91,17 +91,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Load Projects from projects.json
-        fetch('proyectos.json')
-            .then(res => res.json())
-            .then(projects => {
-                renderProjects(projects);
-                setupFilters(projects);
-            })
-            .catch(err => {
-                console.error("Error cargando portafolio:", err);
-                portfolioContainer.innerHTML = '<p class="text-center" style="grid-column: 1/-1; color: var(--accent); font-weight: 600; padding: 2rem;">Hubo un problema cargando los proyectos. Por favor, refresca la página.</p>';
-            });
+        // Load Projects dynamically from window.proyectosData (non-CORS local fallback) or projects.json
+        if (window.proyectosData && Array.isArray(window.proyectosData)) {
+            renderProjects(window.proyectosData);
+            setupFilters(window.proyectosData);
+        } else {
+            fetch('proyectos.json')
+                .then(res => res.json())
+                .then(projects => {
+                    renderProjects(projects);
+                    setupFilters(projects);
+                })
+                .catch(err => {
+                    console.error("Error cargando portafolio:", err);
+                    portfolioContainer.innerHTML = '<p class="text-center" style="grid-column: 1/-1; color: var(--accent); font-weight: 600; padding: 2rem;">Hubo un problema cargando los proyectos. Por favor, refresca la página.</p>';
+                });
+        }
 
         // Render projects template
         function renderProjects(projects) {

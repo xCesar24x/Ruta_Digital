@@ -1,4 +1,4 @@
-[
+window.proyectosData = [
   {
     "id": 1,
     "titulo": "Revenue Analytics Dashboard",
@@ -169,4 +169,4 @@
     "demoUrl": "../career-presentation/index.html",
     "repoUrl": "https://github.com/xCesar24x/career-presentation"
   }
-]
+];
