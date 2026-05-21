@@ -167,6 +167,17 @@ nav {
     margin-bottom: 2.5rem;
 }
 
+.social-proof {
+    padding: 2rem 0 1rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+.social-proof strong {
+    color: var(--accent);
+    font-weight: 700;
+}
+
 .hero-btns {
     display: flex;
     gap: 1.5rem;
@@ -237,6 +248,12 @@ nav {
     transform: translateY(-10px);
     border-color: var(--accent);
     background: linear-gradient(180deg, var(--card-bg) 0%, rgba(0, 255, 170, 0.02) 100%);
+}
+
+.service-card.highlight {
+    border-color: rgba(0, 255, 170, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.1);
+    background: linear-gradient(180deg, var(--card-bg) 0%, rgba(0, 255, 170, 0.05) 100%);
 }
 
 .card-icon {
@@ -747,6 +764,12 @@ footer {
     }
 }
 
+@media (hover: none) and (pointer: coarse) {
+    .cursor, .cursor-follower {
+        display: none !important;
+    }
+}
+
 /* Fallback Image Gradients (Generic premium backgrounds for each card) */
 .portfolio-img-fallback {
     position: absolute;
@@ -968,4 +991,23 @@ footer {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
     line-height: 1.5;
+}
+
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
