@@ -21,7 +21,7 @@ window.proyectosData = [
   },
   {
     "id": 3,
-    "titulo": "Eecosistemas Web Premium",
+    "titulo": "Ecosistemas Web Premium",
     "categoria": "web",
     "descripcion": "Diseño de interfaces UI/UX sofisticadas y desarrollo frontend ultra-rápido optimizado para SEO.",
     "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "Vercel"],
