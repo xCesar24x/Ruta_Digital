@@ -45,7 +45,7 @@
     "categoria": "web",
     "descripcion": "Sitio web de alquiler vacacional de alta gama. Cuenta con galería interactiva de alta velocidad con Swiper.js, calendario inline integrado con Flatpickr y formulario dinámico de cotización.",
     "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "Swiper.js", "Flatpickr"],
-    "imagen": "../Chalet/frontaldia.png",
+    "imagen": "Logos Proyectos finalizados/cabañas del bosque.png",
     "demoUrl": "../Chalet/index.html",
     "repoUrl": "https://github.com/xCesar24x/Chalet"
   },
@@ -65,7 +65,7 @@
     "categoria": "web",
     "descripcion": "Landing page de alta conversión para servicio de grúas 24/7. Optimizada para dispositivos móviles con botones de llamada rápida de un solo toque y enlaces directos de navegación Waze.",
     "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "Swiper.js", "Waze API"],
-    "imagen": "../Grúas Greivin Garcia Ugalde/Logo/Logo.jpeg",
+    "imagen": "Logos Proyectos finalizados/Gruas Greivin.jpeg",
     "demoUrl": "../Grúas Greivin Garcia Ugalde/index.html",
     "repoUrl": "https://github.com/xCesar24x/Gruas-Greivin-Garcia-Ugalde"
   },
@@ -75,7 +75,7 @@
     "categoria": "web",
     "descripcion": "Menú y catálogo digital interactivo para restaurante. Incluye pantalla de carga elegante con clip-path, pestañas interactivas de categorías de comida, y un generador automático de pedidos a WhatsApp.",
     "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "WhatsApp API", "Clip-Path"],
-    "imagen": "../Sr y Sra Pinto/logo-brand/PNG/Logo Horizontal rojo.png",
+    "imagen": "Logos Proyectos finalizados/SrySraPinto.png",
     "demoUrl": "../Sr y Sra Pinto/index.html",
     "repoUrl": "https://github.com/xCesar24x/Sr-y-Sra-Pinto"
   },
@@ -95,7 +95,7 @@
     "categoria": "web",
     "descripcion": "Galería artística e interactiva para exhibición de esculturas patrimoniales de madera. Implementa un slider 3D interactivo con efectos de foco de luz ('spotlight') programados en GSAP.",
     "tecnologias": ["HTML5", "Vanilla CSS", "JavaScript", "GSAP", "Spotlight 3D Slider"],
-    "imagen": "../Oropendola/logo.png.jpeg",
+    "imagen": "Logos Proyectos finalizados/Oropendola.jpeg",
     "demoUrl": "../Oropendola/index.html",
     "repoUrl": "https://github.com/xCesar24x/Oropendola"
   },
@@ -125,7 +125,7 @@
     "categoria": "web",
     "descripcion": "Landing page y ecosistema de barbería de lujo construido en Next.js. Cuenta con un sistema integrado de reservas de citas y base de datos en tiempo real mediante Firebase.",
     "tecnologias": ["Next.js", "TailwindCSS", "TypeScript", "Firebase", "Framer Motion"],
-    "imagen": "logo.png",
+    "imagen": "Logos Proyectos finalizados/Mrs Jhons Barbier.png",
     "demoUrl": "../Mr Johns Barbier",
     "repoUrl": "https://github.com/xCesar24x/Mr-Johns-Barbier"
   },
@@ -135,7 +135,7 @@
     "categoria": "web",
     "descripcion": "Plataforma de bienes raíces residenciales de ultra lujo en Costa Rica. Incluye filtros interactivos avanzados de propiedades por 'vibe' y un visor dinámico de recorridos virtuales de 360° en Three.js.",
     "tecnologias": ["Next.js", "TailwindCSS", "Framer Motion", "Three.js", "360° Panoramas"],
-    "imagen": "../Imagine/luxury-real-estate/public/images/jungle.png",
+    "imagen": "Ruta.png",
     "demoUrl": "../Imagine/luxury-real-estate",
     "repoUrl": "https://github.com/xCesar24x/Imagine"
   },
@@ -155,7 +155,7 @@
     "categoria": "data",
     "descripcion": "Simulador IoT para la optimización de flujos y gestión de colas en gimnasios en horas pico. Mapea máquinas a ExerciseDB en tiempo real y calcula métricas de congestión con algoritmos inteligentes de enrutamiento.",
     "tecnologias": ["Python", "Flask", "SQLite", "HTML5", "CSS3", "JavaScript", "Queue Algorithms"],
-    "imagen": "dashboard.png",
+    "imagen": "Logos Proyectos finalizados/Gym.png",
     "demoUrl": "../gym_ecosystem/frontend/index.html",
     "repoUrl": "https://github.com/xCesar24x/gym_ecosystem"
   },
