@@ -108,6 +108,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
 
+        // Helper to generate initials for fallback backgrounds
+        function getInitials(title) {
+            const cleanTitle = title.replace(/[()&|]/g, '').trim();
+            const words = cleanTitle.split(/\s+/).filter(w => w.length > 0);
+            const stopWords = ['y', 'e', 'o', 'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'de', 'del', 'al', 'en', 'para', 'por', 'con'];
+            const importantWords = words.filter(w => !stopWords.includes(w.toLowerCase()));
+            const finalWords = importantWords.length > 0 ? importantWords : words;
+            const initials = finalWords.slice(0, 2).map(w => w.charAt(0)).join('');
+            return initials || 'RD';
+        }
+
         // Render projects template
         function renderProjects(projects) {
             portfolioContainer.innerHTML = '';
@@ -126,7 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 item.innerHTML = `
                     <div class="portfolio-img">
-                        <img src="${p.imagen}" alt="${p.titulo}">
+                        <div class="portfolio-img-fallback ${p.categoria}-gradient">
+                            <span class="fallback-initials">${getInitials(p.titulo)}</span>
+                            <div class="fallback-glow"></div>
+                        </div>
+                        <img src="${p.imagen}" alt="${p.titulo}" onload="this.style.opacity=1" onerror="this.style.opacity=0; this.style.pointerEvents='none';">
                     </div>
                     <div class="portfolio-info">
                         <h3>${p.titulo}</h3>
