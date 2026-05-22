@@ -141,12 +141,24 @@ class PreloaderVortex {
     triggerSupernova() {
         this.isRunning = false;
         
-        // Lanzar motor de partículas de la Supernova Premium
+        // Transformar el contador en el logo flotante antes de la explosión
+        const content = document.getElementById('preloader-content');
+        content.innerHTML = '<img src="Ruta-Blanco.png" alt="Ruta Digital" style="height: 70px; filter: drop-shadow(0 0 20px rgba(0,255,170,0.8)); transform: scale(0.3); opacity: 0;" id="preloader-logo-final">';
+        
+        const logo = document.getElementById('preloader-logo-final');
+        gsap.to(logo, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: 'elastic.out(1, 0.4)'
+        });
+
+        // Lanzar motor de partículas de la Supernova Premium simultáneamente
         const supernova = new SupernovaExplosion(this.canvas, this.cx, this.cy, () => {
             // Cuando la supernova colapsa y termina, desvanecer preloader container
             gsap.to(this.container, {
                 opacity: 0,
-                duration: 0.5, // Reducido para una transición más ágil
+                duration: 0.8, // Tiempo para apreciar el logo disipándose
                 ease: 'power2.out',
                 onComplete: () => {
                     this.container.style.display = 'none';
