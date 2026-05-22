@@ -66,7 +66,7 @@ class PreloaderVortex {
         // Animación matemática del contador 0-100 con GSAP (Curva Power1.inOut)
         gsap.to(this.progressObj, {
             value: 100,
-            duration: 1.6, // Reducido para una carga super veloz
+            duration: 2.6, // Ajustado para un balance entre velocidad y majestuosidad
             ease: 'power2.out',
             onUpdate: () => {
                 const currentVal = Math.floor(this.progressObj.value);
