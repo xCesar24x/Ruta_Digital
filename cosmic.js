@@ -539,6 +539,15 @@ class InteractiveGalaxy {
         window.addEventListener('resize', () => this.resize());
         this.initDust();
         this.setupInteractions();
+        
+        // Efecto de aparición suave de la galaxia (fade-in)
+        this.canvas.style.opacity = '0';
+        gsap.to(this.canvas, {
+            opacity: 1,
+            duration: 3.5, // Aparición suave y majestuosa después de la explosión
+            ease: 'power2.inOut'
+        });
+
         this.animate();
     }
 
@@ -669,14 +678,14 @@ class InteractiveGalaxy {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         // Rotación orbital global sutil de fondo
-        this.angleOffset += 0.0003;
+        this.angleOffset += 0.00045; // 50% más rápido
 
         // ---------------------------------------------------------------------
         // 4.1 Dibujar Polvo Estelar (Polvo Galáctico)
         // ---------------------------------------------------------------------
         this.dustParticles.forEach(p => {
             // Actualizar rotación básica
-            p.angle += p.speed;
+            p.angle += (p.speed * 1.5); // 50% más rápido
 
             // Distorsión gravitatoria por el mouse (Atracción sutil)
             let drawX = this.cx + p.dist * Math.cos(p.angle + this.angleOffset);
@@ -724,9 +733,9 @@ class InteractiveGalaxy {
             // Rotación órbita de los servicios
             // Si el puntero está encima, detiene o ralentiza su rotación para facilitar click
             if (!star.hovered) {
-                star.angle += star.speed;
+                star.angle += (star.speed * 1.5); // 50% más rápido
             } else {
-                star.angle += star.speed * 0.1; // Súper lento en hover
+                star.angle += (star.speed * 0.15); // Súper lento en hover
             }
 
             // Calcular coordenadas espaciales
