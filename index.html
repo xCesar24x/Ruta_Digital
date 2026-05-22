@@ -47,6 +47,14 @@ x|
 </head>
 
 <body>
+    <!-- Preloader Cósmico Premium -->
+    <div id="preloader">
+        <canvas id="preloader-canvas"></canvas>
+        <div id="preloader-content">
+            <span id="preloader-number">0</span><span class="pct">%</span>
+        </div>
+    </div>
+
     <div class="noise-overlay"></div>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
@@ -69,6 +77,8 @@ x|
     <main>
         <!-- Hero Section -->
         <section id="inicio" class="hero">
+            <!-- Canvas de Galaxia Interactiva de Servicios -->
+            <canvas id="galaxy-canvas"></canvas>
             <div class="hero-bg">
                 <div class="glow"></div>
                 <div class="grid-overlay"></div>
@@ -482,6 +492,10 @@ x|
         </div>
     </footer>
 
+    <!-- GSAP CDN for premium mathematics and animation easing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Cosmic Visual Engine -->
+    <script src="cosmic.js"></script>
     <!-- AOS Library for animations -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <!-- Portfolio Data (supports non-CORS local viewing) -->
