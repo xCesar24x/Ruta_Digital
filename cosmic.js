@@ -143,7 +143,7 @@ class PreloaderVortex {
         
         // Transformar el contador en el logo flotante antes de la explosión
         const content = document.getElementById('preloader-content');
-        content.innerHTML = '<img src="Ruta-Blanco.png" alt="Ruta Digital" style="height: 70px; filter: drop-shadow(0 0 20px rgba(0,255,170,0.8)); transform: scale(0.3); opacity: 0;" id="preloader-logo-final">';
+        content.innerHTML = '<img src="Ruta.png" alt="Ruta Digital" style="height: 70px; filter: drop-shadow(0 0 20px rgba(0,255,170,0.8)); transform: scale(0.3); opacity: 0;" id="preloader-logo-final">';
         
         const logo = document.getElementById('preloader-logo-final');
         gsap.to(logo, {
