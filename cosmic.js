@@ -678,14 +678,14 @@ class InteractiveGalaxy {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         // Rotación orbital global sutil de fondo
-        this.angleOffset += 0.00045; // 50% más rápido
+        this.angleOffset += 0.00081; // 80% más rápido adicional
 
         // ---------------------------------------------------------------------
         // 4.1 Dibujar Polvo Estelar (Polvo Galáctico)
         // ---------------------------------------------------------------------
         this.dustParticles.forEach(p => {
             // Actualizar rotación básica
-            p.angle += (p.speed * 1.5); // 50% más rápido
+            p.angle += (p.speed * 2.7); // 80% más rápido adicional
 
             // Distorsión gravitatoria por el mouse (Atracción sutil)
             let drawX = this.cx + p.dist * Math.cos(p.angle + this.angleOffset);
@@ -733,7 +733,7 @@ class InteractiveGalaxy {
             // Rotación órbita de los servicios
             // Si el puntero está encima, detiene o ralentiza su rotación para facilitar click
             if (!star.hovered) {
-                star.angle += (star.speed * 1.5); // 50% más rápido
+                star.angle += (star.speed * 2.7); // 80% más rápido adicional
             } else {
                 star.angle += (star.speed * 0.15); // Súper lento en hover
             }
