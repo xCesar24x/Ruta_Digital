@@ -131,7 +131,7 @@ window.proyectosData = [
   },
   {
     "id": 14,
-    "titulo": "Imagine Luxury Real Estate",
+    "titulo": "Imagine Luxury Real Estate [En desarrollo]",
     "categoria": "web",
     "descripcion": "Plataforma de bienes raíces residenciales de ultra lujo en Costa Rica. Incluye filtros interactivos avanzados de propiedades por 'vibe' y un visor dinámico de recorridos virtuales de 360° en Three.js.",
     "tecnologias": ["Next.js", "TailwindCSS", "Framer Motion", "Three.js", "360° Panoramas"],
