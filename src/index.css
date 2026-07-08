@@ -3,8 +3,8 @@
     --card-bg: #121212;
     --text-primary: #ffffff;
     --text-secondary: #a0a0a0;
-    --accent: #00ffaa; /* Vibrant green accent to match user preference */
-    --accent-gradient: linear-gradient(135deg, #00ffaa 0%, #00b8ff 100%);
+    --accent: #00a854; /* Forest green matching brand logo */
+    --accent-gradient: linear-gradient(135deg, #00cc66 0%, #004D29 100%);
     --glass: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.1);
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -42,6 +42,20 @@ h1, h2, h3 {
     -webkit-text-fill-color: transparent;
 }
 
+/* Fix for SplitType typography animations inside gradient text */
+.text-gradient:has(.char) {
+    -webkit-text-fill-color: initial;
+    background: none;
+    -webkit-background-clip: initial;
+}
+
+.text-gradient .char {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
 /* Header & Nav */
 header {
     position: fixed;
@@ -49,10 +63,16 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 1.5rem 0;
+    padding: 0.8rem 0;
     background: rgba(5, 5, 5, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+header.scrolled {
+    padding: 0.3rem 0;
+    background: rgba(5, 5, 5, 0.95);
 }
 
 nav {
@@ -62,10 +82,13 @@ nav {
 }
 
 .nav-logo {
-    height: 250px;
-    margin: -100px 0;
-    margin-right: -80px;
-    transition: var(--transition);
+    height: 120px;
+    object-fit: contain;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+header.scrolled .nav-logo {
+    height: 80px;
 }
 
 .nav-links {
@@ -419,10 +442,9 @@ footer {
 }
 
 .footer-logo {
-    height: 200px;
-    margin-top: -60px;
-    margin-bottom: -40px;
-    margin-left: -60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
 .social-links {
@@ -1231,7 +1253,7 @@ footer {
 
 /* Evitar scroll inicial en carga */
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /* Tooltip Premium de la Galaxia */
@@ -1373,5 +1395,44 @@ body {
     .mobile-menu-btn {
         display: block;
     }
+}
+
+/* ==========================================================================
+   Estilos Lenis Smooth Scroll
+   ========================================================================== */
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Estilos Split-Type para Animaciones Tipográficas
+   ========================================================================== */
+.word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+}
+
+.char {
+    display: inline-block;
+    will-change: transform;
 }
 

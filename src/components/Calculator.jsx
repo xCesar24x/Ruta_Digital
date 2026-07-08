@@ -146,7 +146,7 @@ export default function Calculator() {
           {/* STEP 1: SELECT BASE PLAN */}
           {step === 1 && (
             <div className="calc-step-view">
-              <h3 className="step-title"><Sparkles className="w-5 h-5 text-[#00ffaa] inline mr-2" /> 1. Elige la base de tu software</h3>
+              <h3 className="step-title"><Sparkles className="w-5 h-5 text-[#00a854] inline mr-2" /> 1. Elige la base de tu software</h3>
               <p className="step-desc">Toda solución exitosa requiere una base sólida. Selecciona el modelo que mejor se alinea con tu giro de negocio.</p>
               
               <div className="options-grid-step">
@@ -186,7 +186,7 @@ export default function Calculator() {
           {/* STEP 2: SELECT ADD-ONS */}
           {step === 2 && (
             <div className="calc-step-view">
-              <h3 className="step-title"><Sparkles className="w-5 h-5 text-[#00ffaa] inline mr-2" /> 2. Potencia tu sistema con integraciones</h3>
+              <h3 className="step-title"><Sparkles className="w-5 h-5 text-[#00a854] inline mr-2" /> 2. Potencia tu sistema con integraciones</h3>
               <p className="step-desc">Añade módulos funcionales y APIs avanzadas para automatizar procesos clave en tu operación diaria.</p>
 
               <div className="options-grid-step">
@@ -228,7 +228,7 @@ export default function Calculator() {
           {/* STEP 3: SUMMARY & CUSTOMIZATION */}
           {step === 3 && (
             <div className="calc-step-view">
-              <h3 className="step-title"><ShieldCheck className="w-5 h-5 text-[#00ffaa] inline mr-2" /> 3. Genera tu presupuesto personalizado</h3>
+              <h3 className="step-title"><ShieldCheck className="w-5 h-5 text-[#00a854] inline mr-2" /> 3. Genera tu presupuesto personalizado</h3>
               <p className="step-desc">Introduce tus datos de negocio para adjuntarlos a la propuesta y resérvalo directamente por WhatsApp.</p>
 
               <div className="summary-split-layout">
@@ -363,9 +363,9 @@ export default function Calculator() {
           transition: var(--transition);
         }
         .step-node.active {
-          border-color: #00ffaa;
-          color: #00ffaa;
-          box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+          border-color: #00a854;
+          color: #00a854;
+          box-shadow: 0 0 15px rgba(0, 168, 84, 0.3);
         }
         .progress-labels {
           display: flex;
@@ -416,14 +416,14 @@ export default function Calculator() {
           flex-direction: column;
         }
         .calc-card-wizard:hover {
-          border-color: rgba(0, 255, 170, 0.4);
+          border-color: rgba(0, 168, 84, 0.4);
           transform: translateY(-3px);
           background: rgba(255, 255, 255, 0.03);
         }
         .calc-card-wizard.selected {
-          border-color: #00ffaa;
-          background: rgba(0, 255, 170, 0.02);
-          box-shadow: 0 0 25px rgba(0, 255, 170, 0.08);
+          border-color: #00a854;
+          background: rgba(0, 168, 84, 0.02);
+          box-shadow: 0 0 25px rgba(0, 168, 84, 0.08);
         }
         .card-selection-indicator {
           position: absolute;
@@ -439,12 +439,12 @@ export default function Calculator() {
           justify-content: center;
         }
         .calc-card-wizard.selected .card-selection-indicator {
-          background: #00ffaa;
-          border-color: #00ffaa;
+          background: #00a854;
+          border-color: #00a854;
         }
         .card-icon-wrapper {
-          color: #00ffaa;
-          background: rgba(0, 255, 170, 0.05);
+          color: #00a854;
+          background: rgba(0, 168, 84, 0.05);
           width: 48px;
           height: 48px;
           border-radius: 10px;
@@ -480,7 +480,7 @@ export default function Calculator() {
           font-size: 1.05rem;
         }
         .calc-card-wizard.selected .card-price-tag span {
-          color: #00ffaa;
+          color: #00a854;
         }
         .step-actions-footer {
           display: flex;
@@ -526,8 +526,8 @@ export default function Calculator() {
         }
         .form-group input:focus {
           outline: none;
-          border-color: #00ffaa;
-          box-shadow: 0 0 15px rgba(0, 255, 170, 0.1);
+          border-color: #00a854;
+          box-shadow: 0 0 15px rgba(0, 168, 84, 0.1);
         }
         .security-notice {
           display: flex;
@@ -542,7 +542,7 @@ export default function Calculator() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #00ffaa;
+          background: #00a854;
           margin-top: 0.35rem;
           flex-shrink: 0;
         }

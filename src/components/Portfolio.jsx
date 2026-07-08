@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { proyectosData } from '../data/proyectos';
 import { 
   Brain, PieChart, Bot, TrendingUp, Cpu, Briefcase, 
-  ExternalLink, X, Eye, Code, Filter 
+  ExternalLink, X, Eye, Code, Filter, Layout, Calendar, 
+  Utensils, Activity, Building, Truck 
 } from 'lucide-react';
 
 export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }) {
@@ -15,6 +16,16 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
     { id: 'web', name: 'Web Apps' },
     { id: 'ai', name: 'IA & Automatización' },
     { id: 'data', name: 'Data & Analytics' }
+  ];
+
+  // Subcategories mapping with icons
+  const subcategories = [
+    { name: 'Landing Pages', icon: <Layout className="w-5 h-5" /> },
+    { name: 'Motores de Reservas', icon: <Calendar className="w-5 h-5" /> },
+    { name: 'KDS Restaurantes', icon: <Utensils className="w-5 h-5" /> },
+    { name: 'Ecosistemas Gym', icon: <Activity className="w-5 h-5" /> },
+    { name: 'Portal Inmobiliario', icon: <Building className="w-5 h-5" /> },
+    { name: 'Transporte y Logística', icon: <Truck className="w-5 h-5" /> }
   ];
 
   // Map corporate services
@@ -62,18 +73,6 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
     if (filter === 'all') return true;
     return proj.categoria === filter;
   });
-
-  const getSubcategoryName = (index) => {
-    const names = [
-      'Landing Pages', 
-      'Motores de Reservas', 
-      'KDS Restaurantes', 
-      'Ecosistemas Gym', 
-      'Portal Inmobiliario', 
-      'Transporte y Logística'
-    ];
-    return names[index] || 'Proyecto Especial';
-  };
 
   return (
     <section id="portafolio" className="portfolio-section">
@@ -125,52 +124,65 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
               </div>
             </div>
 
-            {/* Project Cards Grid */}
-            <div className="projects-grid">
-              {filteredProjects.map((proj, i) => {
-                // Determine if this card is currently highlighted by the Galaxy click
-                const isGalaxyHighlighted = activeSubcatIndex !== null && i === activeSubcatIndex;
+            {/* Grouped Subcategories Grid */}
+            <div className="portfolio-grid-structured">
+              {subcategories.map((sub, idx) => {
+                const subProjects = filteredProjects.filter(p => p.subcategoria === sub.name);
+                if (subProjects.length === 0) return null;
+
+                const isSubcatHighlighted = activeSubcatIndex !== null && activeSubcatIndex === idx;
 
                 return (
                   <div 
-                    key={proj.id} 
-                    className={`portfolio-card ${isGalaxyHighlighted ? 'galaxy-highlighted' : ''}`}
+                    key={idx} 
+                    className={`portfolio-category ${isSubcatHighlighted ? 'galaxy-highlighted' : ''}`}
                     style={{
-                      border: isGalaxyHighlighted ? '1px solid #00ffaa' : '',
-                      boxShadow: isGalaxyHighlighted ? '0 0 30px rgba(0, 255, 170, 0.3)' : '',
-                      transform: isGalaxyHighlighted ? 'scale(1.04)' : '',
+                      border: isSubcatHighlighted ? '1px solid #00a854' : '1px solid transparent',
+                      boxShadow: isSubcatHighlighted ? '0 0 35px rgba(0, 168, 84, 0.15)' : '',
+                      padding: isSubcatHighlighted ? '1.5rem' : '0rem',
+                      borderRadius: isSubcatHighlighted ? '20px' : '0px',
+                      background: isSubcatHighlighted ? 'rgba(0, 168, 84, 0.02)' : 'transparent',
                       transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
                     }}
-                    onClick={() => setSelectedProject(proj)}
                   >
-                    <div className="portfolio-img-wrapper">
-                      <img 
-                        src={proj.imagen.startsWith('..') ? '/logo.png' : `/${proj.imagen}`} 
-                        alt={proj.titulo} 
-                        className="portfolio-img" 
-                        loading="lazy" 
-                        onError={(e) => { e.target.src = '/Ruta.png'; }}
-                      />
-                      <div className="card-overlay-hover">
-                        <Eye className="w-8 h-8 text-[#00ffaa]" />
-                        <span>Detalles</span>
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div className="card-meta">
-                        <span className="card-subcategory">{getSubcategoryName(proj.id % 6)}</span>
-                        {proj.titulo.includes('[En desarrollo]') && <span className="badge-dev">En desarrollo</span>}
-                      </div>
-                      <h5>{proj.titulo.replace(' [En desarrollo]', '')}</h5>
-                      <p className="line-clamp-2">{proj.descripcion}</p>
-                      <div className="card-tech-tags">
-                        {proj.tecnologias.slice(0, 3).map((tech, idx) => (
-                          <span key={idx} className="tech-tag">{tech}</span>
-                        ))}
-                        {proj.tecnologias.length > 3 && (
-                          <span className="tech-tag">+{proj.tecnologias.length - 3}</span>
-                        )}
-                      </div>
+                    <h4>{sub.icon} {sub.name}</h4>
+                    <div className="portfolio-items">
+                      {subProjects.map(proj => (
+                        <div 
+                          key={proj.id} 
+                          className="portfolio-card"
+                          onClick={() => setSelectedProject(proj)}
+                        >
+                          <div className="portfolio-img-wrapper">
+                            <img 
+                              src={`/${proj.imagen}`} 
+                              alt={proj.titulo} 
+                              className="portfolio-img" 
+                              loading="lazy" 
+                              onError={(e) => { e.target.src = '/logo.png'; }}
+                            />
+                            <div className="card-overlay-hover">
+                              <Eye className="w-8 h-8 text-[#00a854]" />
+                              <span>Detalles</span>
+                            </div>
+                          </div>
+                          <div className="card-content">
+                            <div className="card-meta">
+                              <span className="card-subcategory">{proj.subtitulo}</span>
+                            </div>
+                            <h5>{proj.titulo}</h5>
+                            <p className="line-clamp-2">{proj.descripcion}</p>
+                            <div className="card-tech-tags">
+                              {proj.tecnologias.slice(0, 3).map((tech, idx) => (
+                                <span key={idx} className="tech-tag">{tech}</span>
+                              ))}
+                              {proj.tecnologias.length > 3 && (
+                                <span className="tech-tag">+{proj.tecnologias.length - 3}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 );
@@ -209,15 +221,15 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
               <div className="modal-grid">
                 <div className="modal-image-area">
                   <img 
-                    src={selectedProject.imagen.startsWith('..') ? '/logo.png' : `/${selectedProject.imagen}`} 
+                    src={`/${selectedProject.imagen}`} 
                     alt={selectedProject.titulo} 
-                    onError={(e) => { e.target.src = '/Ruta.png'; }}
+                    onError={(e) => { e.target.src = '/logo.png'; }}
                   />
                 </div>
                 <div className="modal-info-area">
-                  <h2>{selectedProject.titulo.replace(' [En desarrollo]', '')}</h2>
+                  <h2>{selectedProject.titulo}</h2>
                   <span className="modal-category-badge">
-                    {categories.find(c => c.id === selectedProject.categoria)?.name || 'Ecosistema'}
+                    {selectedProject.subcategoria}
                   </span>
                   
                   <p className="modal-desc">{selectedProject.descripcion}</p>
@@ -287,24 +299,27 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
           color: #000;
           font-weight: 700;
         }
-        .projects-grid {
+        .portfolio-items {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
           gap: 2rem;
         }
         .portfolio-card {
           cursor: pointer;
+          background: var(--card-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: 20px;
+          overflow: hidden;
+          transition: var(--transition);
         }
-        .portfolio-card:hover .card-overlay-hover {
-          opacity: 1;
-        }
-        .portfolio-card:hover .portfolio-img {
-          transform: scale(1.06);
+        .portfolio-card:hover {
+          transform: translateY(-5px);
+          border-color: var(--accent);
+          box-shadow: 0 10px 30px rgba(0, 168, 84, 0.15);
         }
         .portfolio-img-wrapper {
           position: relative;
           overflow: hidden;
-          border-radius: 12px;
           aspect-ratio: 16/10;
         }
         .portfolio-img {
@@ -312,6 +327,9 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
           height: 100%;
           object-fit: cover;
           transition: var(--transition);
+        }
+        .portfolio-card:hover .portfolio-img {
+          transform: scale(1.05);
         }
         .card-overlay-hover {
           position: absolute;
@@ -331,6 +349,9 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
           font-weight: 600;
           font-size: 0.95rem;
           backdrop-filter: blur(4px);
+        }
+        .portfolio-card:hover .card-overlay-hover {
+          opacity: 1;
         }
         .card-meta {
           display: flex;
@@ -391,7 +412,7 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
           background: rgba(10, 10, 10, 0.9);
           padding: 2.5rem;
           position: relative;
-          box-shadow: 0 20px 50px rgba(0, 255, 170, 0.1);
+          box-shadow: 0 20px 50px rgba(0, 168, 84, 0.1);
         }
         .close-btn {
           position: absolute;
@@ -434,8 +455,8 @@ export default function Portfolio({ activeSubcatIndex, activeTab, setActiveTab }
         .modal-category-badge {
           display: inline-block;
           font-size: 0.75rem;
-          background: rgba(0, 255, 170, 0.1);
-          border: 1px solid rgba(0, 255, 170, 0.2);
+          background: rgba(0, 168, 84, 0.1);
+          border: 1px solid rgba(0, 168, 84, 0.2);
           color: var(--accent);
           padding: 0.25rem 0.75rem;
           border-radius: 100px;

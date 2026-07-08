@@ -34,7 +34,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 8,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       },
       {
         id: 'booking',
@@ -49,7 +49,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 9,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       },
       {
         id: 'kds',
@@ -64,7 +64,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 9,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       },
       {
         id: 'gym',
@@ -79,7 +79,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 9,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       },
       {
         id: 'realestate',
@@ -94,7 +94,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 10,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       },
       {
         id: 'logistics',
@@ -109,7 +109,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         size: 9,
         pulse: 0,
         hovered: false,
-        color: '#00ffaa'
+        color: '#00a854'
       }
     ];
 
@@ -240,7 +240,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
       const coreRadius = width > 968 ? 60 : 35;
       const coreGradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreRadius);
       coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-      coreGradient.addColorStop(0.2, 'rgba(0, 255, 170, 0.65)');
+      coreGradient.addColorStop(0.2, 'rgba(0, 168, 84, 0.65)');
       coreGradient.addColorStop(0.6, 'rgba(0, 180, 255, 0.15)');
       coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
@@ -287,8 +287,8 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         const auraRadius = (star.hovered ? star.size * 3.8 : star.size * 2.2) + pulseFactor;
         const glowGradient = ctx.createRadialGradient(starX, starY, 0, starX, starY, auraRadius);
         glowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-        glowGradient.addColorStop(0.3, `rgba(0, 255, 170, ${star.hovered ? 0.8 : 0.45})`);
-        glowGradient.addColorStop(1, 'rgba(0, 255, 170, 0)');
+        glowGradient.addColorStop(0.3, `rgba(0, 168, 84, ${star.hovered ? 0.8 : 0.45})`);
+        glowGradient.addColorStop(1, 'rgba(0, 168, 84, 0)');
 
         ctx.beginPath();
         ctx.arc(starX, starY, auraRadius, 0, Math.PI * 2);
@@ -300,7 +300,7 @@ export default function InteractiveGalaxy({ onSelectService, onHoverStar }) {
         ctx.arc(starX, starY, star.hovered ? star.size * 1.3 : star.size, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.shadowBlur = star.hovered ? 25 : 12;
-        ctx.shadowColor = '#00ffaa';
+        ctx.shadowColor = '#00a854';
         ctx.fill();
         ctx.shadowBlur = 0;
 

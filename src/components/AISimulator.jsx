@@ -135,7 +135,7 @@ export default function AISimulator() {
           {/* Input Area */}
           <div className="simulator-input-area glass-panel">
             <div className="panel-header-sim">
-              <Terminal className="w-4 h-4 text-[#00ffaa]" />
+              <Terminal className="w-4 h-4 text-[#00a854]" />
               <span>Entrada de Datos Crudos (Texto Libre)</span>
             </div>
             <textarea
@@ -161,7 +161,7 @@ export default function AISimulator() {
           {/* Pipeline Visualizer Area */}
           <div className="simulator-pipeline-area glass-panel">
             <div className="panel-header-sim">
-              <Cpu className="w-4 h-4 text-[#00ffaa]" />
+              <Cpu className="w-4 h-4 text-[#00a854]" />
               <span>Procesamiento de Agente Autónomo</span>
             </div>
 
@@ -212,7 +212,7 @@ export default function AISimulator() {
             {/* Pipeline Final Stats */}
             {pipelineStep === 4 && (
               <div className="pipeline-success-card">
-                <CheckCircle className="w-8 h-8 text-[#00ffaa] mb-2" />
+                <CheckCircle className="w-8 h-8 text-[#00a854] mb-2" />
                 <h3>¡Simulación Completada!</h3>
                 <div className="success-stats">
                   <div className="stat-pill">
@@ -278,9 +278,9 @@ export default function AISimulator() {
         }
         .simulator-textarea:focus {
           outline: none;
-          border-color: #00ffaa;
+          border-color: #00a854;
           background: rgba(255, 255, 255, 0.02);
-          box-shadow: 0 0 25px rgba(0, 255, 170, 0.05);
+          box-shadow: 0 0 25px rgba(0, 168, 84, 0.05);
         }
         .input-controls {
           display: flex;
@@ -327,9 +327,9 @@ export default function AISimulator() {
           flex-shrink: 0;
         }
         .pipeline-node.active .node-icon {
-          border-color: #00ffaa;
-          color: #00ffaa;
-          box-shadow: 0 0 15px rgba(0, 255, 170, 0.25);
+          border-color: #00a854;
+          color: #00a854;
+          box-shadow: 0 0 15px rgba(0, 168, 84, 0.25);
         }
         .pipeline-node.processing .node-icon {
           animation: pulseGlow 1.5s infinite alternate;
@@ -349,8 +349,8 @@ export default function AISimulator() {
           margin: 0;
         }
         .extracted-data-box {
-          background: rgba(0, 255, 170, 0.03);
-          border: 1px solid rgba(0, 255, 170, 0.15);
+          background: rgba(0, 168, 84, 0.03);
+          border: 1px solid rgba(0, 168, 84, 0.15);
           border-radius: 8px;
           padding: 0.8rem;
           margin-top: 0.8rem;
@@ -390,8 +390,8 @@ export default function AISimulator() {
         }
         .pipeline-success-card {
           margin-top: 2rem;
-          background: rgba(0, 255, 170, 0.02);
-          border: 1px solid rgba(0, 255, 170, 0.2);
+          background: rgba(0, 168, 84, 0.02);
+          border: 1px solid rgba(0, 168, 84, 0.2);
           border-radius: 12px;
           padding: 1.5rem;
           display: flex;
@@ -422,8 +422,8 @@ export default function AISimulator() {
         }
         
         @keyframes pulseGlow {
-          0% { box-shadow: 0 0 5px rgba(0, 255, 170, 0.2); border-color: rgba(0, 255, 170, 0.4); }
-          100% { box-shadow: 0 0 20px rgba(0, 255, 170, 0.6); border-color: #00ffaa; }
+          0% { box-shadow: 0 0 5px rgba(0, 168, 84, 0.2); border-color: rgba(0, 168, 84, 0.4); }
+          100% { box-shadow: 0 0 20px rgba(0, 168, 84, 0.6); border-color: #00a854; }
         }
         @keyframes slideDown {
           from { opacity: 0; transform: translateY(-5px); }

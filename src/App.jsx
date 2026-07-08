@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Preloader from './components/Preloader';
 import CustomCursor from './components/CustomCursor';
 import InteractiveGalaxy from './components/InteractiveGalaxy';
 import Portfolio from './components/Portfolio';
@@ -9,9 +8,12 @@ import {
   Zap, TrendingUp, Database, Bot, Layout, CheckCircle, 
   Mail, MessageCircle, ArrowRight, Menu, X
 } from 'lucide-react';
+import Lenis from 'lenis';
+import SplitType from 'split-type';
+import gsap from 'gsap';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('pymes');
   const [activeSubcatIndex, setActiveSubcatIndex] = useState(null);
   const [hoveredStar, setHoveredStar] = useState(null);
@@ -21,19 +23,58 @@ export default function App() {
 
   // Stats refs and states for animation
   const statsRef = useRef(null);
+  const heroHeadlineRef = useRef(null);
   const [stats, setStats] = useState({ proyectos: 0, eficiencia: 0, roi: 0 });
 
-  // Unlock scroll after preloader completes
+  // Initialize Lenis Smooth Scroll
   useEffect(() => {
-    if (!loading) {
-      document.body.style.overflow = 'auto';
-    } else {
-      document.body.style.overflow = 'hidden';
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
+
+    requestAnimationFrame(raf);
+
     return () => {
-      document.body.style.overflow = 'auto';
+      lenis.destroy();
     };
-  }, [loading]);
+  }, []);
+
+  // Split headline text and reveal with GSAP
+  useEffect(() => {
+    if (!heroHeadlineRef.current) return;
+
+    const splitText = new SplitType(heroHeadlineRef.current, {
+      types: 'words,chars',
+    });
+
+    gsap.fromTo(splitText.chars, 
+      {
+        y: '100%',
+        opacity: 0
+      },
+      {
+        y: '0%',
+        opacity: 1,
+        duration: 1.0,
+        stagger: 0.025,
+        ease: 'power4.out',
+        delay: 0.3
+      }
+    );
+
+    return () => {
+      splitText.revert();
+    };
+  }, []);
 
   // Scroll effect on Header
   useEffect(() => {
@@ -142,10 +183,10 @@ export default function App() {
       zIndex: 1200,
       padding: '1.2rem',
       borderRadius: '12px',
-      border: '1px solid rgba(0, 255, 170, 0.3)',
+      border: '1px solid rgba(0, 168, 84, 0.3)',
       background: 'rgba(10, 10, 10, 0.9)',
       backdropFilter: 'blur(12px)',
-      boxShadow: '0 10px 30px rgba(0, 255, 170, 0.2)',
+      boxShadow: '0 10px 30px rgba(0, 168, 84, 0.2)',
       width: `${tooltipWidth}px`,
       transition: 'opacity 0.2s ease',
       opacity: 1
@@ -153,7 +194,7 @@ export default function App() {
   };
 
   if (loading) {
-    return <Preloader onComplete={() => setLoading(false)} />;
+    // Left as fallback, but loading is initialized as false now
   }
 
   return (
@@ -162,14 +203,10 @@ export default function App() {
       <div className="noise-overlay" />
 
       {/* Nav Header */}
-      <header style={{
-        padding: headerScrolled ? '0.8rem 0' : '1.5rem 0',
-        background: headerScrolled ? 'rgba(5, 5, 5, 0.95)' : 'rgba(5, 5, 5, 0.8)',
-        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-      }}>
+      <header className={headerScrolled ? 'scrolled' : ''}>
         <nav className="container">
           <div className="logo-container">
-            <img src="/Ruta.png" alt="Ruta Digital Logo" className="nav-logo" style={{ maxHeight: '60px' }} />
+            <img src="/Ruta.png?v=2" alt="Ruta Digital Logo" className="nav-logo" />
           </div>
           <ul className="nav-links">
             <li>
@@ -264,7 +301,7 @@ export default function App() {
           <div className="container hero-content">
             <div className="hero-text-area" style={{ pointerEvents: 'auto', zIndex: 10 }}>
               <span className="badge">Impulsando el Futuro Digital</span>
-              <h1>Digitalizamos tu negocio con <span className="text-gradient">Inteligencia Artificial</span></h1>
+              <h1 ref={heroHeadlineRef}>Digitalizamos tu negocio con <span className="text-gradient">Inteligencia Artificial</span></h1>
               <p>Modernizamos tu operación y automatizamos tu tiempo. Tu negocio merece operar de forma eficiente y autónoma. Diseñamos ecosistemas digitales a la medida.</p>
               <div className="hero-btns">
                 <a href="https://wa.me/50684349442" target="_blank" rel="noopener noreferrer" className="btn-main">
@@ -288,16 +325,16 @@ export default function App() {
         <div className="marquee-wrapper">
           <div className="marquee">
             <div className="marquee-content">
-              <span><Zap className="w-4 h-4 text-[#00ffaa] inline mr-1" /> +Eficiencia Operativa</span>
-              <span><TrendingUp className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Optimización de Revenue</span>
-              <span><Database className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Modelado BigQuery</span>
-              <span><Bot className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Automatización End-to-End</span>
-              <span><Layout className="w-4 h-4 text-[#00ffaa] inline mr-1" /> UI/UX Premium</span>
-              <span><Zap className="w-4 h-4 text-[#00ffaa] inline mr-1" /> +Eficiencia Operativa</span>
-              <span><TrendingUp className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Optimización de Revenue</span>
-              <span><Database className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Modelado BigQuery</span>
-              <span><Bot className="w-4 h-4 text-[#00ffaa] inline mr-1" /> Automatización End-to-End</span>
-              <span><Layout className="w-4 h-4 text-[#00ffaa] inline mr-1" /> UI/UX Premium</span>
+              <span><Zap className="w-4 h-4 text-[#00a854] inline mr-1" /> +Eficiencia Operativa</span>
+              <span><TrendingUp className="w-4 h-4 text-[#00a854] inline mr-1" /> Optimización de Revenue</span>
+              <span><Database className="w-4 h-4 text-[#00a854] inline mr-1" /> Modelado BigQuery</span>
+              <span><Bot className="w-4 h-4 text-[#00a854] inline mr-1" /> Automatización End-to-End</span>
+              <span><Layout className="w-4 h-4 text-[#00a854] inline mr-1" /> UI/UX Premium</span>
+              <span><Zap className="w-4 h-4 text-[#00a854] inline mr-1" /> +Eficiencia Operativa</span>
+              <span><TrendingUp className="w-4 h-4 text-[#00a854] inline mr-1" /> Optimización de Revenue</span>
+              <span><Database className="w-4 h-4 text-[#00a854] inline mr-1" /> Modelado BigQuery</span>
+              <span><Bot className="w-4 h-4 text-[#00a854] inline mr-1" /> Automatización End-to-End</span>
+              <span><Layout className="w-4 h-4 text-[#00a854] inline mr-1" /> UI/UX Premium</span>
             </div>
           </div>
         </div>
@@ -343,9 +380,9 @@ export default function App() {
               <h2>Ruta Digital: <span className="text-gradient">Tu Socio Estratégico</span></h2>
               <p>Somos una consultora de innovación tecnológica. Fusionamos el rigor del análisis de datos y la inteligencia de procesos con el poder de la Inteligencia Artificial y el desarrollo de software premium. No construimos herramientas genéricas; diseñamos ecosistemas a medida que optimizan operaciones y digitalizan de punta a punta tu empresa.</p>
               <ul className="check-list">
-                <li><CheckCircle className="w-5 h-5 text-[#00ffaa] inline mr-2" /> Dominio en IA & Automatización End-to-End</li>
-                <li><CheckCircle className="w-5 h-5 text-[#00ffaa] inline mr-2" /> Ecosistemas Web Premium & UX/UI</li>
-                <li><CheckCircle className="w-5 h-5 text-[#00ffaa] inline mr-2" /> Business Intelligence & Revenue Management</li>
+                <li><CheckCircle className="w-5 h-5 text-[#00a854] inline mr-2" /> Dominio en IA & Automatización End-to-End</li>
+                <li><CheckCircle className="w-5 h-5 text-[#00a854] inline mr-2" /> Ecosistemas Web Premium & UX/UI</li>
+                <li><CheckCircle className="w-5 h-5 text-[#00a854] inline mr-2" /> Business Intelligence & Revenue Management</li>
               </ul>
               
               {/* Animated statistics counters */}
@@ -372,7 +409,7 @@ export default function App() {
       <footer id="contacto">
         <div className="container footer-content">
           <div className="footer-info">
-            <img src="/Ruta.png" alt="Ruta Digital" className="footer-logo" style={{ maxHeight: '60px' }} />
+            <img src="/Ruta.png?v=2" alt="Ruta Digital" className="footer-logo" />
             <p>Llevando negocios al mundo digital desde 2026.</p>
             <div className="social-links">
               <a href="https://www.instagram.com/rutadigitalcr/" target="_blank" rel="noopener noreferrer">
@@ -412,7 +449,7 @@ export default function App() {
       {/* Floating Interactive Tooltip */}
       {hoveredStar && (
         <div className="galaxy-tooltip" style={getTooltipStyle()}>
-          <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#00ffaa', fontWeight: 700, marginBottom: '0.3rem' }}>
+          <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#00a854', fontWeight: 700, marginBottom: '0.3rem' }}>
             Servicio Premium
           </div>
           <h4 style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: '1.1rem', color: '#ffffff', fontWeight: 700 }}>
@@ -427,7 +464,7 @@ export default function App() {
               Desde {hoveredStar.price}
             </span>
           </div>
-          <div style={{ fontSize: '0.68rem', color: '#00ffaa', textAlign: 'right', marginTop: '0.5rem', fontWeight: 600 }}>
+          <div style={{ fontSize: '0.68rem', color: '#00a854', textAlign: 'right', marginTop: '0.5rem', fontWeight: 600 }}>
             ⚡ Clic para explorar
           </div>
         </div>
