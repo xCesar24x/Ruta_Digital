@@ -18,9 +18,10 @@ function App() {
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
+      smoothWheel: true,
+      smoothTouch: true, // Habilita el smooth scroll en móviles
       touchMultiplier: 2,
+      syncTouch: true, // Sincroniza el scroll táctil para emular la fricción
       infinite: false,
     });
 
