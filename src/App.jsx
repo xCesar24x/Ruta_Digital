@@ -4,6 +4,7 @@ import PreLoader from './components/PreLoader';
 import Hero from './components/Hero';
 import PortfolioMarquee from './components/PortfolioMarquee';
 import ScrollyTellingSection from './components/ScrollyTellingSection';
+import FAQSection from './components/FAQSection';
 import FooterCTA from './components/FooterCTA';
 import './index.css'; 
 
@@ -43,6 +44,7 @@ function App() {
         <Hero />
         <PortfolioMarquee />
         <ScrollyTellingSection />
+        <FAQSection />
         <FooterCTA />
       </main>
     </>
