@@ -18,7 +18,6 @@
   background-repeat: no-repeat;
   z-index: -1;
   opacity: 0;
-  /* Use a more transparent overlay so we can actually see the image */
   box-shadow: inset 0 0 0 2000px rgba(5, 5, 5, 0.7);
 }
 
@@ -28,22 +27,53 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Still aligned left */
+  align-items: flex-start;
 }
 
 .hero-logo {
-  width: 180px;
-  max-width: 30vw;
-  margin-bottom: 2rem;
-  /* subtle glow effect around the logo */
-  filter: drop-shadow(0 0 20px rgba(31, 156, 89, 0.4));
+  width: 150px;
+  max-width: 28vw;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  filter: drop-shadow(0 0 25px rgba(31, 156, 89, 0.45));
+}
+
+.hero-services-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(31, 156, 89, 0.08);
+  border: 1px solid rgba(31, 156, 89, 0.25);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin-bottom: 1.5rem;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
+}
+
+.badge-icon {
+  color: var(--accent-green);
+}
+
+.badge-separator {
+  color: rgba(31, 156, 89, 0.4);
+  font-size: 0.8rem;
 }
 
 .hero-title {
   font-size: clamp(3rem, 8vw, 6rem);
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
-  /* Ensure SplitType lines have hidden overflow for the animation effect */
   overflow: hidden;
 }
 
@@ -60,21 +90,16 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  max-width: 600px;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  max-width: 650px;
+  line-height: 1.6;
+  color: var(--text-secondary);
   overflow: hidden;
 }
 
 .hero-subtitle .line {
   overflow: hidden;
   display: block;
-}
-
-.hero-btns {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-  align-items: center;
 }
 
 .floating-icons {
@@ -98,8 +123,19 @@
 .icon-3 { bottom: 30%; left: 25%; width: 32px; height: 32px; }
 
 @media (max-width: 768px) {
-  .hero-btns {
+  .hero-services-badge {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
+    gap: 0.4rem;
+    border-radius: 16px;
+    padding: 0.8rem 1rem;
+  }
+
+  .badge-separator {
+    display: none;
+  }
+
+  .hero-logo {
+    width: 120px;
   }
 }

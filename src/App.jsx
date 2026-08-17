@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Lenis from 'lenis';
-import PreLoader from './components/PreLoader';
 import Hero from './components/Hero';
 import PortfolioMarquee from './components/PortfolioMarquee';
 import ScrollyTellingSection from './components/ScrollyTellingSection';
@@ -9,8 +8,6 @@ import FooterCTA from './components/FooterCTA';
 import './index.css'; 
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -38,17 +35,13 @@ function App() {
   }, []);
 
   return (
-    <>
-      {loading && <PreLoader onComplete={() => setLoading(false)} />}
-      
-      <main style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
-        <Hero />
-        <PortfolioMarquee />
-        <ScrollyTellingSection />
-        <FAQSection />
-        <FooterCTA />
-      </main>
-    </>
+    <main>
+      <Hero />
+      <PortfolioMarquee />
+      <ScrollyTellingSection />
+      <FAQSection />
+      <FooterCTA />
+    </main>
   );
 }
 
