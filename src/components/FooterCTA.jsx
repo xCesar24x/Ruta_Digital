@@ -1,85 +1,106 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Instagram, Linkedin, Twitter } from 'lucide-react';
 import './FooterCTA.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FooterCTA = () => {
   const containerRef = useRef(null);
-  const qrRef = useRef(null);
-  const contentRef = useRef(null);
 
   useEffect(() => {
-    // Fade in QR and content on scroll
-    gsap.fromTo(
-      [contentRef.current, qrRef.current],
-      { y: 100, opacity: 0 },
+    // We can add simple fade-in for the whole footer
+    gsap.fromTo(containerRef.current,
+      { y: 50, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.2,
-        duration: 1.5,
-        ease: "power3.out",
+        duration: 1,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 70%",
+          start: "top 80%"
         }
       }
     );
-    
-    // Add floating animation to QR
-    gsap.to(qrRef.current, {
-      y: -15,
-      duration: 2,
-      yoyo: true,
-      repeat: -1,
-      ease: "power1.inOut"
-    });
   }, []);
 
   return (
-    <footer ref={containerRef} className="footer-cta section">
-      <div className="container footer-content-grid">
-        
-        <div ref={contentRef} className="footer-info">
-          <h2>¿Listo para dar el siguiente paso?</h2>
-          <p>Escanea el código para conectarte con nosotros o utiliza los siguientes canales de contacto.</p>
-          
-          <ul className="contact-list">
-            <li>
-              <Mail className="contact-icon" />
-              <span>contacto@rutadigital.lat</span>
-            </li>
-            <li>
-              <Phone className="contact-icon" />
-              <span>+506 8434 9442</span>
-            </li>
-            <li>
-              <MapPin className="contact-icon" />
-              <span>Costa Rica</span>
-            </li>
-          </ul>
-          
-          <button className="cta-btn">Agendar Asesoría</button>
-        </div>
-
-        <div ref={qrRef} className="qr-container">
-          <div className="qr-card">
-            <img src="/QR/QR Ruta.png" alt="Código QR de Ruta Digital" className="qr-img" onError={(e) => {
-              // Fallback if the folder structure is different
-              e.target.src = "/logo.png";
-            }} />
-            <div className="qr-glow"></div>
+    <footer ref={containerRef} className="footer-section">
+      {/* Top CTA Banner */}
+      <div className="footer-top-cta">
+        <div className="container">
+          <div className="cta-banner glass-card">
+            <div className="cta-content">
+              <h2>¿Listo para llevar tu negocio al siguiente nivel?</h2>
+              <p>Agenda una asesoría gratuita y descubre cómo la IA puede transformar tu operación.</p>
+            </div>
+            <a href="mailto:contacto@rutadigital.lat" className="btn-primary">
+              Agendar Asesoría <ArrowRight size={20} />
+            </a>
           </div>
-          <span className="qr-label">Escanea para conectar</span>
         </div>
-
       </div>
-      
+
+      {/* Main Footer Links */}
+      <div className="footer-main">
+        <div className="container footer-grid">
+          
+          <div className="footer-col brand-col">
+            <img src="/logo.png" alt="Ruta Digital Logo" className="footer-logo" />
+            <p className="brand-desc">
+              Digitalizamos tu empresa y automatizamos tu tiempo con ecosistemas a medida e IA de última generación.
+            </p>
+            <div className="social-links">
+              <a href="#" className="social-icon"><Instagram size={20} /></a>
+              <a href="#" className="social-icon"><Linkedin size={20} /></a>
+              <a href="#" className="social-icon"><Twitter size={20} /></a>
+            </div>
+          </div>
+
+          <div className="footer-col">
+            <h3>Navegación</h3>
+            <ul className="footer-links">
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#proyectos">Proyectos</a></li>
+              <li><a href="#faq">Preguntas Frecuentes</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h3>Legal</h3>
+            <ul className="footer-links">
+              <li><a href="#terminos">Términos y Condiciones</a></li>
+              <li><a href="#confidencialidad">Confidencialidad</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col contact-col">
+            <h3>Contacto</h3>
+            <ul className="contact-info">
+              <li>
+                <Mail size={18} className="c-icon" />
+                <a href="mailto:contacto@rutadigital.lat">contacto@rutadigital.lat</a>
+              </li>
+              <li>
+                <Phone size={18} className="c-icon" />
+                <a href="tel:+50684349442">+506 8434 9442</a>
+              </li>
+              <li>
+                <MapPin size={18} className="c-icon" />
+                <span>Costa Rica</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Ruta Digital. Todos los derechos reservados.</p>
+        <div className="container">
+          <p>&copy; {new Date().getFullYear()} Ruta Digital. Todos los derechos reservados.</p>
+        </div>
       </div>
     </footer>
   );
