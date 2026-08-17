@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import { Globe, Bot, Cpu, Network, Zap } from 'lucide-react';
+import { Globe, Bot, Sparkles, Cpu, Network, Zap } from 'lucide-react';
 import './Hero.css';
 
 const Hero = () => {
@@ -111,14 +111,18 @@ const Hero = () => {
           className="hero-logo" 
         />
         
-        {/* Clear Services Badges */}
+        {/* Studio Identity & Services Badges */}
         <div ref={badgeRef} className="hero-services-badge">
-          <span className="badge-item">
-            <Globe size={15} className="badge-icon" /> Desarrollo Web
+          <span className="badge-item studio-highlight">
+            <Sparkles size={14} className="badge-icon" /> Global Creative &amp; Technology Studio
           </span>
           <span className="badge-separator">•</span>
           <span className="badge-item">
-            <Bot size={15} className="badge-icon" /> Desarrollo de Automatizaciones
+            <Globe size={14} className="badge-icon" /> Desarrollo Web
+          </span>
+          <span className="badge-separator">•</span>
+          <span className="badge-item">
+            <Bot size={14} className="badge-icon" /> Automatizaciones
           </span>
         </div>
 
