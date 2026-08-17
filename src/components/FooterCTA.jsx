@@ -59,7 +59,7 @@ const FooterCTA = () => {
             <div className="footer-col brand-col">
               <img src="/logo.png" alt="Ruta Digital Logo" className="footer-logo" />
               <p className="brand-desc">
-                Digitalizamos tu empresa y automatizamos tu tiempo con ecosistemas a medida e IA de última generación.
+                Diseñamos plataformas web de alto impacto y automatizamos tu operación. Soluciones digitales a medida para escalar tu presencia y eficiencia.
               </p>
               <div className="social-links">
               <a href="https://www.instagram.com/rutadigitalcr/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">

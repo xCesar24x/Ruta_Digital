@@ -131,8 +131,8 @@ const Hero = () => {
           <span className="text-glow">todas partes.</span>
         </h1>
         <p ref={subtitleRef} className="hero-subtitle">
-          Digitalizamos tu compañía y automatizamos tus procesos.<br/>
-          Ecosistemas a medida con IA de última generación.
+          Diseñamos plataformas web de alto impacto y automatizamos tu operación.<br/>
+          Soluciones digitales a medida para escalar tu presencia y eficiencia.
         </p>
       </div>
     </section>
