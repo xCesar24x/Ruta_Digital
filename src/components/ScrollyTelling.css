@@ -30,6 +30,24 @@
   top: 50%;
   transform: translateY(-50%);
   width: 100%;
+  /* Removed glass-card padding from here since it's already in the utility class */
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(31, 156, 89, 0.1);
+  border: 1px solid rgba(31, 156, 89, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.scrolly-icon {
+  color: var(--accent-green);
+  filter: drop-shadow(0 0 10px rgba(31, 156, 89, 0.5));
 }
 
 .scrolly-text-block h2 {
@@ -46,6 +64,12 @@
 .text-hidden {
   opacity: 0;
   visibility: hidden;
+}
+
+.scrolly-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
 }
 
 .scrolly-visuals {
