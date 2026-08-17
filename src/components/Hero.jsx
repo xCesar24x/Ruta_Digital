@@ -7,6 +7,7 @@ import './Hero.css';
 const Hero = () => {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
+  const logoRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const btnGroupRef = useRef(null);
@@ -23,11 +24,17 @@ const Hero = () => {
       { scale: 1, opacity: 0.6, duration: 2.5, ease: "power3.out" }
     );
 
+    tl.fromTo(logoRef.current,
+      { y: 50, opacity: 0, scale: 0.8 },
+      { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.5)" },
+      "-=2"
+    );
+
     if (splitTitle.chars) {
       tl.fromTo(splitTitle.chars,
         { y: 100, opacity: 0 },
         { y: 0, opacity: 1, stagger: 0.02, duration: 1, ease: "back.out(1.7)" },
-        "-=2"
+        "-=1.5"
       );
     }
 
@@ -47,6 +54,7 @@ const Hero = () => {
 
     // Floating icons animation
     iconsRef.current.forEach((icon, i) => {
+      if (!icon) return;
       gsap.fromTo(icon, 
         { y: 0, opacity: 0, scale: 0 },
         { y: 0, opacity: 0.3, scale: 1, duration: 1, delay: 3 + (i * 0.2) }
@@ -96,6 +104,12 @@ const Hero = () => {
       </div>
 
       <div className="container hero-content">
+        <img 
+          ref={logoRef} 
+          src="/logo.png" 
+          alt="Ruta Digital Logo" 
+          className="hero-logo" 
+        />
         <h1 ref={titleRef} className="hero-title">
           Tu negocio en<br/>
           <span className="text-glow">todas partes.</span>
