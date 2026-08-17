@@ -78,16 +78,24 @@
 
 .hero-title {
   font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.12;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  overflow: visible;
 }
 
-.hero-title .line, 
+.hero-title .line {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.1em;
+}
+
 .hero-title .word, 
 .hero-title .char {
-  overflow: hidden;
+  overflow: visible;
   display: inline-block;
+  padding-bottom: 0.05em;
 }
 
 .text-glow {
