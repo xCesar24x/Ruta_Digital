@@ -9,6 +9,7 @@ import './index.css';
 
 function App() {
   const cursorRef = useRef(null);
+  const canvasRef = useRef(null);
   const [isCursorActive, setIsCursorActive] = useState(false);
 
   useEffect(() => {
@@ -26,25 +27,79 @@ function App() {
       infinite: false,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // Trail particles & Canvas setup
+    const canvas = canvasRef.current;
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    let particles = [];
+    let animationFrameId;
 
-    requestAnimationFrame(raf);
+    const resizeCanvas = () => {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // Custom Cursor Logic
+    let lastPos = { x: -100, y: -100 };
+
     const moveCursor = (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
       if (cursorRef.current) {
-        // Use GSAP if available, otherwise fallback to standard style update for performance
-        // Actually, direct style update is fast enough for simple circle
-        cursorRef.current.style.left = `${e.clientX}px`;
-        cursorRef.current.style.top = `${e.clientY}px`;
+        cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
+
+      // Add light trail sparkle particles if cursor moved
+      const dist = Math.hypot(x - lastPos.x, y - lastPos.y);
+      if (dist > 3) {
+        particles.push({
+          x: x + 2,
+          y: y + 2,
+          alpha: 0.85,
+          size: Math.random() * 3.5 + 2,
+          decay: 0.035 + Math.random() * 0.015,
+        });
+        lastPos = { x, y };
       }
     };
 
+    const renderLoop = (time) => {
+      lenis.raf(time);
+
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.alpha -= p.decay;
+          p.size *= 0.95;
+
+          if (p.alpha <= 0 || p.size <= 0.2) {
+            particles.splice(i, 1);
+            i--;
+            continue;
+          }
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(74, 222, 128, ${p.alpha})`;
+          ctx.shadowColor = '#22c55e';
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(renderLoop);
+    };
+
+    animationFrameId = requestAnimationFrame(renderLoop);
+
     const handleMouseOver = (e) => {
-      // Check if we are hovering over something clickable or important
       const target = e.target;
       if (
         target.tagName.toLowerCase() === 'button' ||
@@ -64,6 +119,8 @@ function App() {
 
     return () => {
       lenis.destroy();
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
     };
@@ -72,10 +129,28 @@ function App() {
   return (
     <>
       <div className="noise-overlay"></div>
+      <canvas ref={canvasRef} className="cursor-trail-canvas"></canvas>
       <div 
         ref={cursorRef} 
-        className={`custom-cursor ${isCursorActive ? 'active' : ''}`}
-      ></div>
+        className={`custom-cursor-arrow ${isCursorActive ? 'active' : ''}`}
+      >
+        <svg 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path 
+            d="M3 2L20 11L12.5 13.8L9 22L3 2Z" 
+            fill="#16a34a" 
+            stroke="#4ade80" 
+            strokeWidth="1.8" 
+            strokeLinejoin="round"
+          />
+          <circle cx="5.5" cy="4.5" r="1.5" fill="#86efac" />
+        </svg>
+      </div>
       <main>
         <Hero />
         <PortfolioMarquee />
