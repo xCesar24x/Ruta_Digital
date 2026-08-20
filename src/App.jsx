@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Lenis from 'lenis';
+import PreLoader from './components/PreLoader';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import PortfolioMarquee from './components/PortfolioMarquee';
@@ -12,6 +13,7 @@ function App() {
   const cursorRef = useRef(null);
   const canvasRef = useRef(null);
   const [isCursorActive, setIsCursorActive] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Lenis Smooth Scroll
@@ -129,6 +131,7 @@ function App() {
 
   return (
     <>
+      <PreLoader onComplete={() => setIsLoaded(true)} />
       <div className="noise-overlay"></div>
       <canvas ref={canvasRef} className="cursor-trail-canvas"></canvas>
       <div 
@@ -154,7 +157,7 @@ function App() {
       </div>
       <Header />
       <main>
-        <Hero />
+        <Hero isLoaded={isLoaded} />
         <PortfolioMarquee />
         <ScrollyTellingSection />
         <FAQSection />

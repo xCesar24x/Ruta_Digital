@@ -1,31 +1,63 @@
 .portfolio-section {
-  padding: 8rem 0;
+  padding: 7rem 0;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  background-color: var(--bg-color);
+}
+
+/* AI Background layer with smooth blend masks */
+.portfolio-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  opacity: 0.85;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.portfolio-content {
+  position: relative;
+  z-index: 2;
 }
 
 .portfolio-header {
+  position: relative;
   text-align: center;
-  margin-bottom: 4rem;
+  margin: 0 auto 3.5rem auto;
+  width: 100%;
+  max-width: 800px;
 }
 
 .portfolio-header h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  background: linear-gradient(to right, #fff, var(--text-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  color: #FFFFFF;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
 }
 
 .portfolio-header p {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  color: #e2e8f0;
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .marquee-wrapper {
   width: 100vw;
   overflow: hidden;
   position: relative;
-  padding: 2rem 0;
+  z-index: 2;
+  padding: 1.5rem 0;
   /* Fading edges effect */
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -39,45 +71,63 @@
 }
 
 .marquee-item {
-  width: 300px;
-  height: 250px;
+  width: 280px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  padding: 2rem;
-  /* We reuse .glass-card base from index.css */
+  gap: 1.2rem;
+  padding: 1.8rem;
+  background: rgba(10, 15, 12, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.marquee-item:hover {
+  transform: translateY(-6px);
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(15, 25, 18, 0.75);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(31, 156, 89, 0.2);
 }
 
 .img-container {
   width: 100%;
-  height: 120px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
-  padding: 10px;
+  padding: 12px;
+  transition: all 0.3s ease;
 }
 
 .img-container img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  /* Make the logos blend better if they have backgrounds */
-  filter: grayscale(0.5) contrast(1.2);
+  filter: contrast(1.05);
   transition: all 0.3s ease;
 }
 
+.marquee-item:hover .img-container {
+  background: rgba(31, 156, 89, 0.08);
+}
+
 .marquee-item:hover .img-container img {
-  filter: grayscale(0) contrast(1) drop-shadow(0 0 20px rgba(31, 156, 89, 0.4));
-  transform: scale(1.1);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 16px rgba(74, 222, 128, 0.45));
 }
 
 .project-name {
   font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-primary);
+  font-size: 1.05rem;
+  color: #FFFFFF;
   text-align: center;
+  letter-spacing: 0.01em;
 }

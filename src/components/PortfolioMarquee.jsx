@@ -7,7 +7,7 @@ const projects = [
   { name: 'Gym', img: '/Logos Proyectos finalizados/Gym.png' },
   { name: 'Mrs Jhons Barbier', img: '/Logos Proyectos finalizados/Mrs Jhons Barbier.png' },
   { name: 'Oropendola', img: '/Logos Proyectos finalizados/Oropendola.jpeg' },
-  { name: 'Sr & Sra Pinto', img: '/Logos Proyectos finalizados/SrySraPinto.png' },
+  { name: 'Sr & Sra Pinto', img: '/Logos Proyectos finalizados/Logo BLanco Vertical.png' },
   { name: 'Cabañas del Bosque', img: '/Logos Proyectos finalizados/cabañas del bosque.png' },
 ];
 
@@ -15,16 +15,16 @@ const PortfolioMarquee = () => {
   const marqueeRef = useRef(null);
   
   useEffect(() => {
-    // We clone the elements to create a seamless infinite loop
-    const marqueeContent = marqueeRef.current;
-    
-    // We animate the track
-    gsap.to(marqueeContent, {
-      xPercent: -50,
-      ease: "none",
-      duration: 25,
-      repeat: -1
+    const ctx = gsap.context(() => {
+      gsap.to(marqueeRef.current, {
+        xPercent: -50,
+        ease: "none",
+        duration: 25,
+        repeat: -1
+      });
     });
+
+    return () => ctx.revert();
   }, []);
 
   // Double the array for seamless looping
@@ -32,7 +32,11 @@ const PortfolioMarquee = () => {
 
   return (
     <section className="portfolio-section" id="proyectos">
-      <div className="container">
+      <div 
+        className="portfolio-bg" 
+        style={{ backgroundImage: `url('/projects-bg.png?v=1')` }}
+      ></div>
+      <div className="container portfolio-content">
         <div className="portfolio-header">
           <h2>Proyectos Destacados</h2>
           <p>Confían en nosotros para transformar su presencia digital</p>

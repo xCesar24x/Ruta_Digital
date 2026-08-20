@@ -4,63 +4,88 @@ import SplitType from 'split-type';
 import { Globe, Bot, Sparkles } from 'lucide-react';
 import './Hero.css';
 
-const Hero = () => {
+const Hero = ({ isLoaded = true }) => {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
   const logoRef = useRef(null);
   const badgeRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    const splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
-    const splitSubtitle = new SplitType(subtitleRef.current, { types: 'lines' });
+    if (!isLoaded || hasAnimatedRef.current) return;
+    hasAnimatedRef.current = true;
 
-    const tl = gsap.timeline({ delay: 0.2 });
+    let splitTitle = null;
+    let splitSubtitle = null;
 
-    tl.fromTo(bgRef.current, 
-      { scale: 1.1, opacity: 0 },
-      { scale: 1, opacity: 0.85, duration: 2, ease: "power3.out" }
-    );
-
-    tl.fromTo(logoRef.current,
-      { y: 40, opacity: 0, scale: 0.85 },
-      { y: 0, opacity: 1, scale: 1, duration: 1, ease: "back.out(1.5)" },
-      "-=1.5"
-    );
-
-    tl.fromTo(badgeRef.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-      "-=1"
-    );
-
-    if (splitTitle.chars) {
-      tl.fromTo(splitTitle.chars,
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.02, duration: 0.9, ease: "back.out(1.7)" },
-        "-=0.8"
-      );
-    }
-
-    if (splitSubtitle.lines) {
-      tl.fromTo(splitSubtitle.lines,
-        { y: 25, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
-        "-=0.6"
-      );
-    }
-
-    gsap.to(bgRef.current, {
-      yPercent: 30,
-      ease: "none",
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true
+    const ctx = gsap.context(() => {
+      try {
+        splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
+        splitSubtitle = new SplitType(subtitleRef.current, { types: 'lines' });
+      } catch (e) {
+        console.warn('SplitType error:', e);
       }
-    });
+
+      const tl = gsap.timeline({ delay: 0.05 });
+
+      tl.fromTo(bgRef.current, 
+        { scale: 1.15, opacity: 0 },
+        { scale: 1, opacity: 0.85, duration: 1.5, ease: "power3.out" }
+      );
+
+      tl.fromTo(logoRef.current,
+        { y: 35, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "back.out(1.5)" },
+        "-=1.1"
+      );
+
+      tl.fromTo(badgeRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
+        "-=0.7"
+      );
+
+      if (splitTitle?.chars?.length) {
+        tl.fromTo(splitTitle.chars,
+          { y: 60, opacity: 0, rotateX: -45 },
+          { y: 0, opacity: 1, rotateX: 0, stagger: 0.025, duration: 0.8, ease: "back.out(1.7)" },
+          "-=0.5"
+        );
+      } else {
+        tl.fromTo(titleRef.current,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+          "-=0.5"
+        );
+      }
+
+      if (splitSubtitle?.lines?.length) {
+        tl.fromTo(splitSubtitle.lines,
+          { y: 25, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
+          "-=0.4"
+        );
+      } else {
+        tl.fromTo(subtitleRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
+          "-=0.4"
+        );
+      }
+
+      gsap.to(bgRef.current, {
+        yPercent: 30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    }, heroRef);
 
     const handleMouseMove = (e) => {
       if (!heroRef.current) return;
@@ -91,11 +116,12 @@ const Hero = () => {
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      splitTitle.revert();
-      splitSubtitle.revert();
+      ctx.revert();
+      splitTitle?.revert?.();
+      splitSubtitle?.revert?.();
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isLoaded]);
 
   return (
     <section ref={heroRef} className="hero-section">
