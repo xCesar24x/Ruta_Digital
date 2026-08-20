@@ -21,7 +21,7 @@ const Hero = () => {
 
     tl.fromTo(bgRef.current, 
       { scale: 1.1, opacity: 0 },
-      { scale: 1, opacity: 0.6, duration: 2, ease: "power3.out" }
+      { scale: 1, opacity: 0.85, duration: 2, ease: "power3.out" }
     );
 
     tl.fromTo(logoRef.current,
@@ -82,18 +82,47 @@ const Hero = () => {
       }
     });
 
+    const handleMouseMove = (e) => {
+      if (!heroRef.current) return;
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+      
+      const xPos = (clientX / innerWidth - 0.5) * 10;
+      const yPos = (clientY / innerHeight - 0.5) * -10;
+      
+      gsap.to('.hero-glow', {
+        x: clientX,
+        y: clientY,
+        duration: 1,
+        ease: "power2.out"
+      });
+      
+      gsap.to('.hero-content', {
+        rotationX: yPos,
+        rotationY: xPos,
+        transformPerspective: 1000,
+        transformOrigin: "center center",
+        duration: 0.5,
+        ease: "power1.out"
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
     return () => {
       splitTitle.revert();
       splitSubtitle.revert();
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
   return (
     <section ref={heroRef} className="hero-section">
+      <div className="hero-glow"></div>
       <div 
         ref={bgRef} 
         className="hero-bg" 
-        style={{ backgroundImage: `url('/hero.png')` }}
+        style={{ backgroundImage: `url('/hero.png?v=2')` }}
       ></div>
       
       {/* Floating Tech Icons */}

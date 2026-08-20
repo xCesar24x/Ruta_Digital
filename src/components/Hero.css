@@ -18,7 +18,19 @@
   background-repeat: no-repeat;
   z-index: -1;
   opacity: 0;
-  box-shadow: inset 0 0 0 2000px rgba(5, 5, 5, 0.7);
+}
+
+.hero-glow {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 800px; 
+  height: 800px;
+  background: radial-gradient(circle, rgba(31, 156, 89, 0.12) 0%, rgba(0,0,0,0) 60%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .hero-content {
@@ -28,6 +40,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  transform-style: preserve-3d;
 }
 
 .hero-logo {
