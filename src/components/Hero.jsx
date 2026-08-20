@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import { Globe, Bot, Sparkles, Cpu, Network, Zap } from 'lucide-react';
+import { Globe, Bot, Sparkles } from 'lucide-react';
 import './Hero.css';
 
 const Hero = () => {
@@ -11,7 +11,6 @@ const Hero = () => {
   const badgeRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
-  const iconsRef = useRef([]);
 
   useEffect(() => {
     const splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
@@ -51,25 +50,6 @@ const Hero = () => {
         "-=0.6"
       );
     }
-
-    // Floating icons animation
-    iconsRef.current.forEach((icon, i) => {
-      if (!icon) return;
-      gsap.fromTo(icon, 
-        { y: 0, opacity: 0, scale: 0 },
-        { y: 0, opacity: 0.25, scale: 1, duration: 1, delay: 1 + (i * 0.2) }
-      );
-      gsap.to(icon, {
-        y: Math.random() * -30 - 15,
-        x: Math.random() * 20 - 10,
-        rotation: Math.random() * 30 - 15,
-        duration: 3 + Math.random() * 2,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut",
-        delay: 1 + (i * 0.2)
-      });
-    });
 
     gsap.to(bgRef.current, {
       yPercent: 30,
@@ -125,18 +105,11 @@ const Hero = () => {
         className="hero-bg" 
         style={{ backgroundImage: `url('/hero.png?v=2')` }}
       ></div>
-      
-      {/* Floating Tech Icons */}
-      <div className="floating-icons">
-        <Cpu ref={el => iconsRef.current[0] = el} className="f-icon icon-1" />
-        <Network ref={el => iconsRef.current[1] = el} className="f-icon icon-2" />
-        <Zap ref={el => iconsRef.current[2] = el} className="f-icon icon-3" />
-      </div>
 
       <div className="container hero-content">
         <img 
           ref={logoRef} 
-          src="/logo.png" 
+          src="/Ruta.png" 
           alt="Ruta Digital Logo" 
           className="hero-logo" 
         />

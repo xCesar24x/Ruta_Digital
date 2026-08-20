@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Lenis from 'lenis';
+import Header from './components/Header';
 import Hero from './components/Hero';
 import PortfolioMarquee from './components/PortfolioMarquee';
 import ScrollyTellingSection from './components/ScrollyTellingSection';
@@ -151,6 +152,7 @@ function App() {
           <circle cx="5.5" cy="4.5" r="1.5" fill="#86efac" />
         </svg>
       </div>
+      <Header />
       <main>
         <Hero />
         <PortfolioMarquee />
