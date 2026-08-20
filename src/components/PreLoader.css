@@ -8,9 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1200px;
+  perspective: 1000px;
   overflow: hidden;
   pointer-events: all;
+  contain: strict;
+  transform: translateZ(0);
 }
 
 .preloader-content {
@@ -19,17 +21,39 @@
   align-items: center;
   justify-content: center;
   gap: 2.5rem;
-  transform-style: preserve-3d;
+  position: relative;
+}
+
+.preloader-logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-glow {
+  position: absolute;
+  width: 320px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.45) 0%, rgba(34, 197, 94, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  filter: blur(14px);
 }
 
 .preloader-logo {
+  position: relative;
   width: 290px;
   max-width: 85vw;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 25px rgba(34, 197, 94, 0.45));
   transform-origin: center center;
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .preloader-progress-bar {
@@ -38,7 +62,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   overflow: hidden;
-  transition: opacity 0.2s ease;
+  will-change: opacity;
 }
 
 .preloader-progress {
@@ -48,4 +72,5 @@
   transform-origin: left;
   transform: scaleX(0);
   box-shadow: 0 0 10px #4ade80;
+  will-change: transform;
 }

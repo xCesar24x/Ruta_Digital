@@ -14,62 +14,70 @@ const Hero = ({ isLoaded = true }) => {
   const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (!isLoaded || hasAnimatedRef.current) return;
-    hasAnimatedRef.current = true;
-
     let splitTitle = null;
     let splitSubtitle = null;
 
-    const ctx = gsap.context(() => {
-      try {
-        splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
-        splitSubtitle = new SplitType(subtitleRef.current, { types: 'lines' });
-      } catch (e) {
-        console.warn('SplitType error:', e);
-      }
+    try {
+      splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
+      splitSubtitle = new SplitType(subtitleRef.current, { types: 'lines' });
+      // Set initial states immediately to prevent flash and avoid reflow on load
+      gsap.set(splitTitle.chars, { y: 60, opacity: 0, rotateX: -45 });
+      gsap.set(splitSubtitle.lines, { y: 25, opacity: 0 });
+      gsap.set(bgRef.current, { scale: 1.15, opacity: 0 });
+      gsap.set(logoRef.current, { y: 35, opacity: 0, scale: 0.9 });
+      gsap.set(badgeRef.current, { y: 20, opacity: 0 });
+    } catch (e) {
+      console.warn('SplitType error:', e);
+    }
 
+    return () => {
+      splitTitle?.revert?.();
+      splitSubtitle?.revert?.();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded || hasAnimatedRef.current) return;
+    hasAnimatedRef.current = true;
+
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.05 });
 
-      tl.fromTo(bgRef.current, 
-        { scale: 1.15, opacity: 0 },
-        { scale: 1, opacity: 0.85, duration: 1.5, ease: "power3.out" }
+      tl.to(bgRef.current, 
+        { scale: 1, opacity: 0.85, duration: 1.4, ease: "power3.out" }
       );
 
-      tl.fromTo(logoRef.current,
-        { y: 35, opacity: 0, scale: 0.9 },
+      tl.to(logoRef.current,
         { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "back.out(1.5)" },
-        "-=1.1"
+        "-=1.0"
       );
 
-      tl.fromTo(badgeRef.current,
-        { y: 20, opacity: 0 },
+      tl.to(badgeRef.current,
         { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
         "-=0.7"
       );
 
-      if (splitTitle?.chars?.length) {
-        tl.fromTo(splitTitle.chars,
-          { y: 60, opacity: 0, rotateX: -45 },
+      const titleChars = titleRef.current?.querySelectorAll('.char');
+      if (titleChars?.length) {
+        tl.to(titleChars,
           { y: 0, opacity: 1, rotateX: 0, stagger: 0.025, duration: 0.8, ease: "back.out(1.7)" },
           "-=0.5"
         );
       } else {
-        tl.fromTo(titleRef.current,
-          { y: 30, opacity: 0 },
+        tl.to(titleRef.current,
           { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
           "-=0.5"
         );
       }
 
-      if (splitSubtitle?.lines?.length) {
-        tl.fromTo(splitSubtitle.lines,
-          { y: 25, opacity: 0 },
+      const subtitleLines = subtitleRef.current?.querySelectorAll('.line');
+      if (subtitleLines?.length) {
+        tl.to(subtitleLines,
           { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
           "-=0.4"
         );
       } else {
-        tl.fromTo(subtitleRef.current,
-          { y: 20, opacity: 0 },
+        tl.to(subtitleRef.current,
           { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
           "-=0.4"
         );
@@ -117,8 +125,6 @@ const Hero = ({ isLoaded = true }) => {
 
     return () => {
       ctx.revert();
-      splitTitle?.revert?.();
-      splitSubtitle?.revert?.();
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isLoaded]);

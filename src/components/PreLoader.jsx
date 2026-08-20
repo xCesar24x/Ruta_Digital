@@ -5,6 +5,7 @@ import './PreLoader.css';
 const PreLoader = ({ onComplete }) => {
   const containerRef = useRef(null);
   const logoRef = useRef(null);
+  const glowRef = useRef(null);
   const progressRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
@@ -23,43 +24,59 @@ const PreLoader = ({ onComplete }) => {
         }
       });
 
-      gsap.set(logoRef.current, { scale: 0.85, opacity: 0 });
-      gsap.set(progressRef.current, { scaleX: 0 });
+      gsap.set(logoRef.current, { scale: 0.88, opacity: 0, force3D: true });
+      gsap.set(glowRef.current, { scale: 0.8, opacity: 0, force3D: true });
+      gsap.set(progressRef.current, { scaleX: 0, force3D: true });
 
-      // 1. Logo fades in
+      // 1. Logo & Glow fade in smoothly
       tl.to(logoRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 0.8,
+        duration: 0.65,
         ease: "power2.out"
       })
-      // 2. Progress line fills with green glow
+      .to(glowRef.current, {
+        opacity: 0.6,
+        scale: 1,
+        duration: 0.65,
+        ease: "power2.out"
+      }, "<")
+      // 2. Progress line fills
       .to(progressRef.current, {
         scaleX: 1,
-        duration: 0.9,
+        duration: 0.8,
         ease: "power2.inOut"
-      }, "-=0.3")
+      }, "-=0.2")
       // 3. Hide progress line
       .to(progressRef.current.parentElement, {
         opacity: 0,
-        duration: 0.2
+        duration: 0.2,
+        ease: "power1.out"
       })
-      // 4. Cinematic Zoom-Through: Logo expands massively forward passing through the camera
-      .to(logoRef.current, {
-        scale: 35,
+      // 4. Ultra-smooth Cinematic Zoom-Through:
+      // Uses GPU hardware-accelerated transform with optimized scale & curve
+      .to(glowRef.current, {
+        scale: 3,
         opacity: 0,
-        duration: 1.2,
-        ease: "power4.inOut"
-      }, "+=0.05")
-      // 5. Fade container out smoothly to reveal the website
+        duration: 0.75,
+        ease: "power2.in"
+      }, "+=0.03")
+      .to(logoRef.current, {
+        scale: 12,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.in",
+        force3D: true
+      }, "<")
+      // 5. Container fades smoothly to reveal the website
       .to(containerRef.current, {
         opacity: 0,
-        duration: 0.6,
-        ease: "power2.inOut",
+        duration: 0.45,
+        ease: "power2.out",
         onStart: () => {
           if (onCompleteRef.current) onCompleteRef.current();
         }
-      }, "-=0.7");
+      }, "-=0.3");
     });
 
     return () => ctx.revert();
@@ -70,12 +87,17 @@ const PreLoader = ({ onComplete }) => {
   return (
     <div ref={containerRef} className="preloader-container">
       <div className="preloader-content">
-        <img 
-          ref={logoRef} 
-          src="/Ruta.png" 
-          alt="Ruta Digital" 
-          className="preloader-logo"
-        />
+        <div className="preloader-logo-wrapper">
+          <div ref={glowRef} className="preloader-glow"></div>
+          <img 
+            ref={logoRef} 
+            src="/Ruta.png" 
+            alt="Ruta Digital" 
+            className="preloader-logo"
+            loading="eager"
+            decoding="sync"
+          />
+        </div>
         <div className="preloader-progress-bar">
           <div ref={progressRef} className="preloader-progress"></div>
         </div>
