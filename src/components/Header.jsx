@@ -52,16 +52,16 @@ const Header = () => {
 
               <div className={`nav-dropdown ${servicesDropdown ? 'show' : ''}`}>
                 <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
-                  <div className="dropdown-item-title">Panel de Control & Dashboards</div>
-                  <div className="dropdown-item-desc">Métricas y analítica en tiempo real para tu negocio</div>
+                  <div className="dropdown-item-title">Desarrollo &amp; Ecosistemas Digitales</div>
+                  <div className="dropdown-item-desc">Web Apps, Software a Medida, Landing Pages, UI/UX y Branding</div>
                 </a>
                 <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
-                  <div className="dropdown-item-title">Automatización con IA</div>
-                  <div className="dropdown-item-desc">Workflows inteligentes y optimización de tareas repetitivas</div>
+                  <div className="dropdown-item-title">Automatización &amp; IA</div>
+                  <div className="dropdown-item-desc">RPA, Workflows Inteligentes y Capacitaciones Corporativas en IA</div>
                 </a>
                 <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
-                  <div className="dropdown-item-title">Desarrollo Web de Alto Impacto</div>
-                  <div className="dropdown-item-desc">Plataformas ultra rápidas, modernas y escalables</div>
+                  <div className="dropdown-item-title">Estrategia, Datos &amp; Revenue</div>
+                  <div className="dropdown-item-desc">Revenue Management, Business Intelligence y Dashboards en Vivo</div>
                 </a>
               </div>
             </div>
