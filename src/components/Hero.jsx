@@ -84,16 +84,17 @@ const Hero = () => {
 
     const handleMouseMove = (e) => {
       if (!heroRef.current) return;
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      
-      const xPos = (clientX / innerWidth - 0.5) * 10;
-      const yPos = (clientY / innerHeight - 0.5) * -10;
+      const rect = heroRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const xPos = (e.clientX / window.innerWidth - 0.5) * 10;
+      const yPos = (e.clientY / window.innerHeight - 0.5) * -10;
       
       gsap.to('.hero-glow', {
-        x: clientX,
-        y: clientY,
-        duration: 1,
+        x: mouseX,
+        y: mouseY,
+        duration: 0.8,
         ease: "power2.out"
       });
       
