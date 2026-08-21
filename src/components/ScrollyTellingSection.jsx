@@ -31,7 +31,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Desarrollo Web',
     shortDesc: 'Plataformas web de alto rendimiento, ultra rápidas y con arquitectura moderna.',
-    image: '/services/leaf-1.svg',
     tag: 'Full-Stack',
     bullets: [
       'Next.js / React / Vite con tiempos de carga sub-segundo',
@@ -44,7 +43,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Software a Medida',
     shortDesc: 'Sistemas a medida diseñados para resolver la lógica operativa exacta de tu negocio.',
-    image: '/services/leaf-2.svg',
     tag: 'Custom Core',
     bullets: [
       'Paneles de administración y portales empresariales privados',
@@ -57,7 +55,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Aplicaciones Web',
     shortDesc: 'Web apps interactivas, escalables y seguras con experiencia de usuario fluida.',
-    image: '/services/leaf-3.svg',
     tag: 'SaaS / PWA',
     bullets: [
       'SaaS y plataformas interactivas con autenticación robusta',
@@ -70,7 +67,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Ecosistemas Web',
     shortDesc: 'Infraestructuras digitales completas conectadas con CRM, ERP y pasarelas.',
-    image: '/services/leaf-4.svg',
     tag: 'Enterprise',
     bullets: [
       'Sincronización bidireccional entre CRM, ERP y base de datos',
@@ -83,7 +79,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Landing Pages',
     shortDesc: 'Páginas de aterrizaje de ultra alta conversión diseñadas para maximizar ventas.',
-    image: '/services/leaf-5.svg',
     tag: 'Conversión',
     bullets: [
       'Estructura persuasiva orientada a captación y ventas directas',
@@ -96,7 +91,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Diseño Web',
     shortDesc: 'Estética de vanguardia con acabados premium que diferencian tu marca al instante.',
-    image: '/services/leaf-6.svg',
     tag: 'Creative UI',
     bullets: [
       'Micro-interacciones y efectos visuales de última generación',
@@ -109,7 +103,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Diseño UI/UX',
     shortDesc: 'Investigación de usuarios, wireframing interactivo y arquitecturas de información intuitivas.',
-    image: '/services/leaf-7.svg',
     tag: 'User Experience',
     bullets: [
       'Pruebas de usabilidad y mapeo de flujos de usuario (User Journeys)',
@@ -122,7 +115,6 @@ const ALL_SERVICES = [
     category: 'web',
     title: 'Branding Digital',
     shortDesc: 'Construcción de identidad de marca sólida, manual de estilo y presencia corporativa.',
-    image: '/services/leaf-8.svg',
     tag: 'Identidad',
     bullets: [
       'Identidad visual, tipografía, paleta de colores y kits de marca',
@@ -137,7 +129,6 @@ const ALL_SERVICES = [
     category: 'ai',
     title: 'Automatización de Procesos',
     shortDesc: 'Eliminación de cuellos de botella mediante flujos inteligentes y bots autónomos (RPA).',
-    image: '/services/leaf-9.svg',
     tag: 'RPA & Bots',
     bullets: [
       'Conexión de herramientas y flujos automáticos (Make, Zapier, n8n, Python)',
@@ -150,7 +141,6 @@ const ALL_SERVICES = [
     category: 'ai',
     title: 'Capacitaciones Corporativas IA',
     shortDesc: 'Formación estratégica para equipos en adopción de IA generativa y productividad extrema.',
-    image: '/services/leaf-10.svg',
     tag: 'Workshops IA',
     bullets: [
       'Talleres prácticos de ChatGPT, Claude, Copilot y agentes de IA',
@@ -163,7 +153,6 @@ const ALL_SERVICES = [
     category: 'ai',
     title: 'Project Management',
     shortDesc: 'Dirección ágil de proyectos tecnológicos garantizando cumplimiento en tiempo y calidad.',
-    image: '/services/leaf-11.svg',
     tag: 'Agile Delivery',
     bullets: [
       'Metodologías Scrum / Agile adaptadas a tus objetivos',
@@ -178,7 +167,6 @@ const ALL_SERVICES = [
     category: 'data',
     title: 'Revenue Management',
     shortDesc: 'Optimización de precios dinámicos, estructuras de monetización y maximización de margen.',
-    image: '/services/leaf-12.svg',
     tag: 'Crecimiento',
     bullets: [
       'Modelos de precios dinámicos y estrategias de empaquetado de servicios',
@@ -191,7 +179,6 @@ const ALL_SERVICES = [
     category: 'data',
     title: 'Análisis de Datos & BI',
     shortDesc: 'Transformación de datos brutos en inteligencia de negocio accionable para tomar decisiones.',
-    image: '/services/leaf-13.svg',
     tag: 'Analytics',
     bullets: [
       'Limpieza y centralización de datos de múltiples fuentes',
@@ -204,7 +191,6 @@ const ALL_SERVICES = [
     category: 'data',
     title: 'Visual Management',
     shortDesc: 'Dashboards ejecutivos interactivos con métricas y KPIs clave en tiempo real.',
-    image: '/services/leaf-14.svg',
     tag: 'Dashboards',
     bullets: [
       'Paneles en PowerBI, Grafana o soluciones web customizadas',
