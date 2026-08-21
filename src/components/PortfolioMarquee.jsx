@@ -37,17 +37,52 @@ const projects = [
 ];
 
 const PortfolioMarquee = () => {
+  const sectionRef = useRef(null);
   const marqueeRef = useRef(null);
   
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Infinite smooth ticker
       gsap.to(marqueeRef.current, {
         xPercent: -50,
         ease: "none",
         duration: 25,
         repeat: -1
       });
-    });
+
+      // Advanced Smoke Condensation / Vapor Convergence on Title
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      tl.fromTo('.portfolio-header h2',
+        { 
+          opacity: 0, 
+          letterSpacing: '0.22em', 
+          filter: 'blur(18px) brightness(1.6)', 
+          scale: 1.08, 
+          y: 25 
+        },
+        { 
+          opacity: 1, 
+          letterSpacing: '-0.02em', 
+          filter: 'blur(0px) brightness(1)', 
+          scale: 1, 
+          y: 0, 
+          duration: 1.25, 
+          ease: 'power3.out' 
+        }
+      )
+      .fromTo('.portfolio-header p',
+        { opacity: 0, y: 20, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
+        "-=0.5"
+      );
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
@@ -56,7 +91,7 @@ const PortfolioMarquee = () => {
   const items = [...projects, ...projects];
 
   return (
-    <section className="portfolio-section" id="proyectos">
+    <section className="portfolio-section" id="proyectos" ref={sectionRef}>
       {/* Botanical Background (fondo4.png) with FAQ-style blend */}
       <div className="portfolio-bg-wrapper">
         <img 

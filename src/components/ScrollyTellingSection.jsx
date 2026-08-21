@@ -236,18 +236,43 @@ const ScrollyTellingSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance animation for header
-      gsap.from('.services-header-badge, .services-main-title, .services-main-subtitle', {
-        y: 30,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: 'power2.out',
+      // Advanced Smoke Condensation / Vapor Convergence Entrance Animation
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 75%'
+          start: 'top 80%',
+          once: true
         }
       });
+
+      tl.fromTo('.services-header-badge', 
+        { opacity: 0, y: 20, filter: 'blur(10px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+      )
+      .fromTo('.services-main-title',
+        { 
+          opacity: 0, 
+          letterSpacing: '0.18em', 
+          filter: 'blur(18px) brightness(1.6)', 
+          scale: 1.06, 
+          y: 25 
+        },
+        { 
+          opacity: 1, 
+          letterSpacing: '-0.02em', 
+          filter: 'blur(0px) brightness(1)', 
+          scale: 1, 
+          y: 0, 
+          duration: 1.25, 
+          ease: 'power3.out' 
+        },
+        "-=0.3"
+      )
+      .fromTo('.services-main-subtitle',
+        { opacity: 0, y: 20, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
+        "-=0.5"
+      );
 
       // Subtle float animation on visual command center
       gsap.to('.command-visual-container', {

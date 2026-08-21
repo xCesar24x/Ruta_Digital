@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
 import './FAQSection.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
   {
@@ -46,14 +50,54 @@ const faqs = [
 ];
 
 const FAQSection = () => {
+  const sectionRef = useRef(null);
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Advanced Smoke Condensation / Vapor Convergence on Title
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      tl.fromTo('.faq-header h2',
+        { 
+          opacity: 0, 
+          letterSpacing: '0.22em', 
+          filter: 'blur(18px) brightness(1.6)', 
+          scale: 1.08, 
+          y: 25 
+        },
+        { 
+          opacity: 1, 
+          letterSpacing: '-0.02em', 
+          filter: 'blur(0px) brightness(1)', 
+          scale: 1, 
+          y: 0, 
+          duration: 1.25, 
+          ease: 'power3.out' 
+        }
+      )
+      .fromTo('.faq-header p',
+        { opacity: 0, y: 20, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
+        "-=0.5"
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="faq-section" id="faq">
+    <section className="faq-section" id="faq" ref={sectionRef}>
       {/* Botanical Background */}
       <div className="faq-bg-wrapper">
         <img 
