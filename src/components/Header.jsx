@@ -29,6 +29,12 @@ const Header = () => {
     }
   };
 
+  const selectServiceCategory = (cat) => {
+    window.dispatchEvent(new CustomEvent('select-service-category', { detail: cat }));
+    scrollToSection('servicios');
+    setServicesDropdown(false);
+  };
+
   return (
     <header className={`site-header ${isScrolled ? 'header-scrolled' : ''}`}>
       {/* Main Floating Navbar */}
@@ -51,15 +57,27 @@ const Header = () => {
               </button>
 
               <div className={`nav-dropdown ${servicesDropdown ? 'show' : ''}`}>
-                <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
+                <a 
+                  href="#servicios" 
+                  onClick={(e) => { e.preventDefault(); selectServiceCategory('web'); }} 
+                  className="dropdown-item"
+                >
                   <div className="dropdown-item-title">Desarrollo &amp; Ecosistemas Digitales</div>
                   <div className="dropdown-item-desc">Web Apps, Software a Medida, Landing Pages, UI/UX y Branding</div>
                 </a>
-                <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
+                <a 
+                  href="#servicios" 
+                  onClick={(e) => { e.preventDefault(); selectServiceCategory('ai'); }} 
+                  className="dropdown-item"
+                >
                   <div className="dropdown-item-title">Automatización &amp; IA</div>
                   <div className="dropdown-item-desc">RPA, Workflows Inteligentes y Capacitaciones Corporativas en IA</div>
                 </a>
-                <a href="#servicios" onClick={() => scrollToSection('servicios')} className="dropdown-item">
+                <a 
+                  href="#servicios" 
+                  onClick={(e) => { e.preventDefault(); selectServiceCategory('data'); }} 
+                  className="dropdown-item"
+                >
                   <div className="dropdown-item-title">Estrategia, Datos &amp; Revenue</div>
                   <div className="dropdown-item-desc">Revenue Management, Business Intelligence y Dashboards en Vivo</div>
                 </a>
@@ -69,11 +87,11 @@ const Header = () => {
             <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="nav-link">
               Proyectos
             </a>
-            <a href="#servicios" onClick={() => scrollToSection('servicios')} className="nav-link">
-              Soluciones IA
-            </a>
             <a href="#faq" onClick={() => scrollToSection('faq')} className="nav-link">
-              Preguntas
+              Preguntas Frecuentes
+            </a>
+            <a href="#contacto" onClick={() => scrollToSection('contacto')} className="nav-link">
+              Contacto
             </a>
           </div>
 
@@ -94,31 +112,30 @@ const Header = () => {
             </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle Button */}
           <button 
             className="mobile-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Alternar menú de navegación móvil"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Drawer Menu */}
         {mobileMenuOpen && (
-          <div className="mobile-nav-menu glass-card">
+          <div className="mobile-nav-menu container glass-card">
             <a href="#servicios" onClick={() => scrollToSection('servicios')} className="mobile-nav-link">
               Servicios
             </a>
             <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="mobile-nav-link">
               Proyectos
             </a>
-            <a href="#servicios" onClick={() => scrollToSection('servicios')} className="mobile-nav-link">
-              Automatización IA
-            </a>
             <a href="#faq" onClick={() => scrollToSection('faq')} className="mobile-nav-link">
               Preguntas Frecuentes
+            </a>
+            <a href="#contacto" onClick={() => scrollToSection('contacto')} className="mobile-nav-link">
+              Contacto
             </a>
 
             <div className="mobile-actions">

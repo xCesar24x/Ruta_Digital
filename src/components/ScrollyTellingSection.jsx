@@ -235,6 +235,19 @@ const ScrollyTellingSection = () => {
     setExpandedId(prev => prev === id ? null : id);
   };
 
+  // Listen for Navbar category selection
+  useEffect(() => {
+    const handleCategorySelect = (e) => {
+      if (e.detail) {
+        setActiveCategory(e.detail);
+        setExpandedId(null);
+      }
+    };
+
+    window.addEventListener('select-service-category', handleCategorySelect);
+    return () => window.removeEventListener('select-service-category', handleCategorySelect);
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Entrance animation for header
