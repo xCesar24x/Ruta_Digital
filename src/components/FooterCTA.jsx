@@ -13,30 +13,37 @@ const FooterCTA = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.cta-banner', {
-        y: 35,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.footer-top-cta',
-          start: 'top 90%',
-          toggleActions: 'play none none none'
+      // Use fromTo with once: true and immediate render fallback
+      gsap.fromTo('.cta-banner', 
+        { y: 25, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 95%',
+            once: true
+          }
         }
-      });
+      );
 
-      gsap.from('.footer-col', {
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.footer-main',
-          start: 'top 92%',
-          toggleActions: 'play none none none'
+      gsap.fromTo('.footer-col', 
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.08,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 95%',
+            once: true
+          }
         }
-      });
+      );
     }, containerRef);
 
     return () => ctx.revert();

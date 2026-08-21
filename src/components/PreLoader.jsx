@@ -4,9 +4,10 @@ import './PreLoader.css';
 
 const PreLoader = ({ onComplete }) => {
   const containerRef = useRef(null);
-  const logoRef = useRef(null);
+  const logoWrapperRef = useRef(null);
+  const fillWrapperRef = useRef(null);
   const glowRef = useRef(null);
-  const progressRef = useRef(null);
+  const laserRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
   const [isDone, setIsDone] = useState(false);
@@ -24,55 +25,74 @@ const PreLoader = ({ onComplete }) => {
         }
       });
 
-      gsap.set(logoRef.current, { scale: 0.88, opacity: 0, force3D: true });
+      // Initial state
+      gsap.set(logoWrapperRef.current, { scale: 0.94, opacity: 0, force3D: true });
       gsap.set(glowRef.current, { scale: 0.8, opacity: 0, force3D: true });
-      gsap.set(progressRef.current, { scaleX: 0, force3D: true });
+      gsap.set(fillWrapperRef.current, { clipPath: 'inset(0% 100% 0% 0%)' });
+      gsap.set(laserRef.current, { left: '0%', opacity: 0 });
 
-      // 1. Logo & Glow fade in smoothly
-      tl.to(logoRef.current, {
+      // 1. Black & White Base Logo fades in smoothly
+      tl.to(logoWrapperRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 0.65,
+        duration: 0.5,
         ease: "power2.out"
       })
       .to(glowRef.current, {
-        opacity: 0.6,
+        opacity: 0.4,
         scale: 1,
-        duration: 0.65,
+        duration: 0.5,
         ease: "power2.out"
       }, "<")
-      // 2. Progress line fills
-      .to(progressRef.current, {
-        scaleX: 1,
-        duration: 0.8,
-        ease: "power2.inOut"
-      }, "-=0.2")
-      // 3. Hide progress line
-      .to(progressRef.current.parentElement, {
-        opacity: 0,
-        duration: 0.2,
-        ease: "power1.out"
+
+      // 2. Letters fill from Left to Right (B&W -> Glowing Green) with laser leading edge
+      .to(laserRef.current, {
+        opacity: 1,
+        duration: 0.1
       })
-      // 4. Ultra-smooth Cinematic Zoom-Through:
-      // Uses GPU hardware-accelerated transform with optimized scale & curve
+      .to(fillWrapperRef.current, {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        duration: 1.1,
+        ease: "power1.inOut"
+      }, "<")
+      .to(laserRef.current, {
+        left: '100%',
+        duration: 1.1,
+        ease: "power1.inOut"
+      }, "<")
       .to(glowRef.current, {
-        scale: 3,
+        opacity: 0.8,
+        scale: 1.15,
+        duration: 1.1,
+        ease: "power1.inOut"
+      }, "<")
+
+      // 3. Fade out laser line
+      .to(laserRef.current, {
         opacity: 0,
-        duration: 0.75,
+        duration: 0.15
+      }, "-=0.1")
+
+      // 4. Ultra-smooth Hardware Accelerated Zoom-Through (60/120fps)
+      .to(glowRef.current, {
+        scale: 2.5,
+        opacity: 0,
+        duration: 0.55,
         ease: "power2.in"
-      }, "+=0.03")
-      .to(logoRef.current, {
-        scale: 12,
+      }, "+=0.04")
+      .to(logoWrapperRef.current, {
+        scale: 6.5,
         opacity: 0,
-        duration: 0.8,
-        ease: "power3.in",
+        duration: 0.6,
+        ease: "power2.in",
         force3D: true
       }, "<")
-      // 5. Container fades smoothly to reveal the website
+
+      // 5. Container dissolves cleanly to reveal the website
       .to(containerRef.current, {
         opacity: 0,
-        duration: 0.45,
-        ease: "power2.out",
+        duration: 0.4,
+        ease: "power1.out",
         onStart: () => {
           if (onCompleteRef.current) onCompleteRef.current();
         }
@@ -87,19 +107,29 @@ const PreLoader = ({ onComplete }) => {
   return (
     <div ref={containerRef} className="preloader-container">
       <div className="preloader-content">
-        <div className="preloader-logo-wrapper">
+        <div className="preloader-logo-wrapper" ref={logoWrapperRef}>
           <div ref={glowRef} className="preloader-glow"></div>
+          
+          {/* Layer 1: Black & White / Dimmed Base Logo */}
           <img 
-            ref={logoRef} 
             src="/Ruta.png" 
             alt="Ruta Digital" 
-            className="preloader-logo"
+            className="preloader-logo preloader-logo-base"
             loading="eager"
             decoding="sync"
           />
-        </div>
-        <div className="preloader-progress-bar">
-          <div ref={progressRef} className="preloader-progress"></div>
+
+          {/* Layer 2: Glowing Green Filled Logo (Clipped Left-to-Right) */}
+          <div ref={fillWrapperRef} className="preloader-logo-fill-wrapper">
+            <img 
+              src="/Ruta.png" 
+              alt="Ruta Digital" 
+              className="preloader-logo preloader-logo-fill"
+              loading="eager"
+              decoding="sync"
+            />
+            <div ref={laserRef} className="preloader-laser-line"></div>
+          </div>
         </div>
       </div>
     </div>

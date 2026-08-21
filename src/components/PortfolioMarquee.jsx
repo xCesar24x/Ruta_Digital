@@ -57,10 +57,17 @@ const PortfolioMarquee = () => {
 
   return (
     <section className="portfolio-section" id="proyectos">
-      <div 
-        className="portfolio-bg" 
-        style={{ backgroundImage: `url('/projects-bg.png?v=1')` }}
-      ></div>
+      {/* Botanical Background (fondo4.png) with FAQ-style blend */}
+      <div className="portfolio-bg-wrapper">
+        <img 
+          src="/fondo4.png" 
+          alt="Fondo Botánico Proyectos Destacados" 
+          className="portfolio-bg-img" 
+          loading="lazy"
+        />
+        <div className="portfolio-bg-overlay"></div>
+      </div>
+
       <div className="container portfolio-content">
         <div className="portfolio-header">
           <h2>Proyectos Destacados</h2>

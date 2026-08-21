@@ -6,21 +6,35 @@
   background-color: var(--bg-color);
 }
 
-/* AI Background layer with smooth blend masks */
-.portfolio-bg {
+/* Botanical Background Layer (fondo4.png) */
+.portfolio-bg-wrapper {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
-  opacity: 0.85;
+  z-index: 0;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  overflow: hidden;
+}
+
+.portfolio-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: blur(8px) brightness(0.65) contrast(1.1) saturate(1.15);
+  transform: scale(1.05);
+  opacity: 0.65;
+  transition: opacity 0.5s ease;
+}
+
+.portfolio-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(5, 5, 5, 0.35) 0%, rgba(5, 5, 5, 0.78) 85%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.15) 25%, rgba(5, 5, 5, 0.15) 75%, rgba(5, 5, 5, 0.9) 100%);
+  pointer-events: none;
 }
 
 .portfolio-content {
