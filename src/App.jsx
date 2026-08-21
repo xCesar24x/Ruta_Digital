@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PreLoader from './components/PreLoader';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -8,6 +10,8 @@ import ScrollyTellingSection from './components/ScrollyTellingSection';
 import FAQSection from './components/FAQSection';
 import FooterCTA from './components/FooterCTA';
 import './index.css'; 
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const cursorRef = useRef(null);
@@ -29,6 +33,14 @@ function App() {
       syncTouch: true,
       infinite: false,
     });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const tickerCb = (time) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tickerCb);
+    gsap.ticker.lagSmoothing(0);
 
     // Trail particles & Canvas setup
     const canvas = canvasRef.current;
@@ -69,9 +81,7 @@ function App() {
       }
     };
 
-    const renderLoop = (time) => {
-      lenis.raf(time);
-
+    const renderLoop = () => {
       if (ctx && canvas) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
@@ -122,6 +132,7 @@ function App() {
 
     return () => {
       lenis.destroy();
+      gsap.ticker.remove(tickerCb);
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', moveCursor);
@@ -129,9 +140,16 @@ function App() {
     };
   }, []);
 
+  const handlePreloaderComplete = () => {
+    setIsLoaded(true);
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+  };
+
   return (
     <>
-      <PreLoader onComplete={() => setIsLoaded(true)} />
+      <PreLoader onComplete={handlePreloaderComplete} />
       <div className="noise-overlay"></div>
       <canvas ref={canvasRef} className="cursor-trail-canvas"></canvas>
       <div 

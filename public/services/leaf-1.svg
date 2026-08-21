@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#062111" />
+        <stop offset="100%" stop-color="#021008" />
+      </linearGradient>
+      <linearGradient id="leafGrad1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#4ade80" />
+        <stop offset="100%" stop-color="#16a34a" />
+      </linearGradient>
+    </defs>
+    <rect width="240" height="180" fill="url(#bg1)" />
+    <g stroke="url(#leafGrad1)" fill="none" stroke-linecap="round" opacity="0.85">
+      <!-- Main leaf contour -->
+      <path d="M-20,180 Q60,30 200,-10 Q240,80 180,180 Z" stroke-width="2.5" fill="rgba(34, 197, 94, 0.08)"/>
+      <!-- Main central stem -->
+      <path d="M-10,180 Q80,70 195,5" stroke-width="3" />
+      <!-- Left side veins -->
+      <path d="M10,155 Q0,120 -15,100" stroke-width="1.6" />
+      <path d="M35,130 Q15,95 -5,75" stroke-width="1.6" />
+      <path d="M60,105 Q35,70 10,50" stroke-width="1.6" />
+      <path d="M85,80 Q60,50 30,30" stroke-width="1.6" />
+      <path d="M110,60 Q85,30 55,15" stroke-width="1.6" />
+      <path d="M135,42 Q115,18 85,5" stroke-width="1.6" />
+      <!-- Right side veins -->
+      <path d="M40,150 Q90,165 140,160" stroke-width="1.6" />
+      <path d="M65,125 Q115,140 165,135" stroke-width="1.6" />
+      <path d="M90,100 Q140,110 185,100" stroke-width="1.6" />
+      <path d="M115,78 Q160,85 195,70" stroke-width="1.6" />
+      <path d="M140,58 Q175,60 205,45" stroke-width="1.6" />
+      <path d="M165,38 Q195,38 215,25" stroke-width="1.6" />
+    </g>
+  </svg>

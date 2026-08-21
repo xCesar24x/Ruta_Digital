@@ -12,19 +12,34 @@ const FooterCTA = () => {
   const [modalState, setModalState] = useState({ isOpen: false, type: 'terminos' });
 
   useEffect(() => {
-    gsap.fromTo(containerRef.current,
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out",
+    const ctx = gsap.context(() => {
+      gsap.from('.cta-banner', {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%"
+          trigger: '.footer-top-cta',
+          start: 'top 90%',
+          toggleActions: 'play none none none'
         }
-      }
-    );
+      });
+
+      gsap.from('.footer-col', {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.footer-main',
+          start: 'top 92%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const openModal = (e, type) => {
@@ -38,7 +53,7 @@ const FooterCTA = () => {
 
   return (
     <>
-      <footer ref={containerRef} className="footer-section">
+      <footer ref={containerRef} className="footer-section" id="contacto">
         <div className="footer-top-cta">
           <div className="container">
             <div className="cta-banner glass-card">

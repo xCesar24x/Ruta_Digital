@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bg7" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#072413" />
+        <stop offset="100%" stop-color="#010e06" />
+      </linearGradient>
+    </defs>
+    <rect width="240" height="180" fill="url(#bg7)" />
+    <g stroke="#4ade80" fill="none" stroke-linecap="round" opacity="0.85">
+      <!-- Leaf A -->
+      <path d="M-10,90 Q80,10 160,60 Q100,160 -10,90 Z" stroke-width="2.2" fill="rgba(34, 197, 94, 0.08)" />
+      <path d="M0,85 Q75,70 150,65" stroke-width="2.6" />
+      <path d="M30,82 Q45,45 75,30" stroke-width="1.5" />
+      <path d="M65,78 Q85,45 115,35" stroke-width="1.5" />
+      <path d="M100,74 Q120,50 145,45" stroke-width="1.5" />
+      <path d="M35,85 Q50,120 75,135" stroke-width="1.5" />
+      <path d="M70,82 Q90,115 120,125" stroke-width="1.5" />
+      <!-- Leaf B -->
+      <path d="M80,180 Q140,80 230,70" stroke-width="2.6" stroke="#86efac" />
+      <path d="M110,150 Q160,135 195,150" stroke-width="1.5" />
+      <path d="M135,125 Q180,105 220,115" stroke-width="1.5" />
+      <path d="M160,105 Q200,85 235,88" stroke-width="1.5" />
+    </g>
+  </svg>
