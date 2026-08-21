@@ -89,11 +89,13 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 320px;
+  width: 360px;
+  max-width: 90vw;
+  white-space: normal; /* Fix: Override parent navbar nowrap */
   background: #080d0a; /* Dark solid high-contrast base */
   border: 1px solid rgba(34, 197, 94, 0.35);
-  border-radius: 14px;
-  padding: 0.6rem;
+  border-radius: 16px;
+  padding: 0.65rem;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(22, 163, 74, 0.2);
   opacity: 0;
   visibility: hidden;
@@ -124,11 +126,12 @@
 
 .dropdown-item {
   display: block;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1rem;
   border-radius: 10px;
   text-decoration: none;
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
+  white-space: normal;
 }
 
 .dropdown-item:hover {
@@ -142,12 +145,15 @@
   font-weight: 600;
   font-size: 0.92rem;
   margin-bottom: 0.25rem;
+  white-space: normal;
 }
 
 .dropdown-item-desc {
   color: #94a3b8;
-  font-size: 0.8rem;
-  line-height: 1.35;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  white-space: normal;
+  word-break: normal;
 }
 
 /* Right Nav Actions - Sleek & Minimalist */
