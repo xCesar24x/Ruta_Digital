@@ -13,22 +13,50 @@ const FooterCTA = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Use fromTo with once: true and immediate render fallback
-      gsap.fromTo('.cta-banner', 
-        { y: 25, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 95%',
-            once: true
-          }
+      // CTA Banner & Title Smoke Condensation Timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 90%',
+          once: true
         }
+      });
+
+      tl.fromTo('.cta-banner', 
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }
+      )
+      .fromTo('.cta-content h2',
+        { 
+          opacity: 0, 
+          letterSpacing: '0.2em', 
+          filter: 'blur(18px) brightness(1.6)', 
+          scale: 1.06, 
+          y: 20 
+        },
+        { 
+          opacity: 1, 
+          letterSpacing: '-0.02em', 
+          filter: 'blur(0px) brightness(1)', 
+          scale: 1, 
+          y: 0, 
+          duration: 1.25, 
+          ease: 'power3.out' 
+        },
+        "-=0.4"
+      )
+      .fromTo('.cta-content p',
+        { opacity: 0, y: 15, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' },
+        "-=0.5"
+      )
+      .fromTo('.cta-banner .btn-primary',
+        { opacity: 0, scale: 0.92, y: 15 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.5)' },
+        "-=0.4"
       );
 
+      // Clean direct entrance for bottom footer columns
       gsap.fromTo('.footer-col', 
         { y: 20, opacity: 0 },
         {
@@ -39,7 +67,7 @@ const FooterCTA = () => {
           ease: 'power2.out',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 95%',
+            start: 'top 85%',
             once: true
           }
         }
