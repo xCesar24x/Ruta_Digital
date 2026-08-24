@@ -131,6 +131,17 @@ const FoundersSection = () => {
                   
                   {/* FRONT SIDE */}
                   <div className="founder-card-face founder-card-front">
+                    {/* Botanical Background Texture */}
+                    <div className="founder-card-bg-layer">
+                      <img 
+                        src="/fondo2tarjetas.png" 
+                        alt="Fondo Botánico Helechos" 
+                        className="founder-card-bg-img"
+                        loading="lazy"
+                      />
+                      <div className="founder-card-bg-overlay"></div>
+                    </div>
+
                     {/* Top Status & Role Pill */}
                     <div className="founder-front-top">
                       <div className="founder-badge-pill">
@@ -185,6 +196,17 @@ const FoundersSection = () => {
 
                   {/* BACK SIDE */}
                   <div className="founder-card-face founder-card-back">
+                    {/* Botanical Background Texture */}
+                    <div className="founder-card-bg-layer">
+                      <img 
+                        src="/fondo2tarjetas.png" 
+                        alt="Fondo Botánico Helechos" 
+                        className="founder-card-bg-img"
+                        loading="lazy"
+                      />
+                      <div className="founder-card-bg-overlay back-overlay"></div>
+                    </div>
+
                     {/* Back Header */}
                     <div className="founder-back-header">
                       <div>
