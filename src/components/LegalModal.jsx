@@ -10,12 +10,12 @@ const LegalModal = ({ isOpen, type, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      
-      gsap.fromTo(overlayRef.current, 
-        { opacity: 0 }, 
+
+      gsap.fromTo(overlayRef.current,
+        { opacity: 0 },
         { opacity: 1, duration: 0.3 }
       );
-      
+
       gsap.fromTo(modalRef.current,
         { y: 50, opacity: 0, scale: 0.95 },
         { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "power2.out", delay: 0.1 }
@@ -40,7 +40,7 @@ const LegalModal = ({ isOpen, type, onClose }) => {
           <p>Última actualización: Agosto 2026</p>
           <h4>1. Servicios</h4>
           <p>Ruta Digital se especializa en consultoría de transformación digital, desarrollo web premium y automatización con Inteligencia Artificial. Los entregables, plazos y costos de cada proyecto se definen explícitamente en una propuesta comercial única para cada cliente.</p>
-          
+
           <h4>2. Propiedad Intelectual</h4>
           <p>Todo el código fuente, diseños, y agentes de IA desarrollados son propiedad de Ruta Digital hasta que el cliente haya liquidado el 100% de los honorarios acordados. Una vez pagado, los derechos de explotación se transfieren al cliente, manteniendo Ruta Digital el derecho de usar el proyecto en su portafolio.</p>
 
@@ -59,7 +59,7 @@ const LegalModal = ({ isOpen, type, onClose }) => {
           <p>Última actualización: Agosto 2026</p>
           <h4>1. Protección de tu Información Comercial</h4>
           <p>Entendemos que al digitalizar tu empresa, nos confías datos críticos. Nos comprometemos a mantener la más estricta confidencialidad sobre todas las bases de datos, flujos de ingresos, métricas y secretos comerciales a los que tengamos acceso.</p>
-          
+
           <h4>2. Uso de Datos para Inteligencia Artificial</h4>
           <p>Cuando entrenamos modelos de Inteligencia Artificial para tu negocio, utilizamos entornos cerrados y seguros. Tus datos empresariales **no** se utilizarán para entrenar modelos públicos ni se compartirán con terceros sin tu consentimiento expreso.</p>
 
@@ -77,19 +77,19 @@ const LegalModal = ({ isOpen, type, onClose }) => {
 
   return (
     <div className="modal-overlay" ref={overlayRef} onClick={handleClose}>
-      <div className="modal-container" ref={modalRef} onClick={(e) => e.stopPropagation()}>
-        
+      <div className="modal-container glass-card" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+
         <div className="modal-header">
           <h2>{currentContent.title}</h2>
           <button className="modal-close-btn" onClick={handleClose} aria-label="Cerrar modal">
             <X size={24} />
           </button>
         </div>
-        
+
         <div className="modal-body custom-scrollbar">
           {currentContent.body}
         </div>
-        
+
       </div>
     </div>
   );

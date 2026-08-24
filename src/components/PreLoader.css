@@ -101,3 +101,15 @@
   z-index: 4;
   border-radius: 4px;
 }
+
+@media (max-width: 480px) {
+  .preloader-logo-wrapper {
+    width: 240px;
+    max-width: 80vw;
+  }
+
+  .preloader-glow {
+    width: 280px;
+    height: 150px;
+  }
+}

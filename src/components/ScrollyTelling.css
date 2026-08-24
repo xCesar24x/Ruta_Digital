@@ -626,7 +626,7 @@
 @media (max-width: 1024px) {
   .services-body-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
   .services-right-col {
@@ -640,33 +640,182 @@
 
 @media (max-width: 768px) {
   .services-ecosystem-section {
-    padding: 5rem 0 4rem 0;
+    padding: 4.5rem 0 3.5rem 0;
+  }
+
+  .services-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .services-header-badge {
+    font-size: 0.76rem;
+    padding: 0.35rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .services-main-title {
+    font-size: clamp(1.9rem, 7.5vw, 2.7rem);
+    margin-bottom: 0.9rem;
+  }
+
+  .services-main-subtitle {
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  /* Horizontal swipeable chip tabs */
+  .services-tabs-wrapper {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    padding-bottom: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .services-tabs-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .services-tabs {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    border-radius: 50px;
+    gap: 0.4rem;
+    padding: 0.3rem;
+  }
+
+  .service-tab-btn {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.84rem;
+    gap: 0.4rem;
+  }
+
+  .tab-count {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
   }
 
   .service-card-top-strip {
-    height: 40px;
+    height: 38px;
+  }
+
+  .service-number-pill {
+    left: 10px;
+    padding: 0.12rem 0.5rem;
+  }
+
+  .service-number-pill span {
+    font-size: 0.72rem;
   }
 
   .accordion-header {
-    padding: 1rem 1.1rem;
+    padding: 0.85rem 1rem;
+    gap: 0.6rem;
   }
 
   .service-title {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
+  }
+
+  .service-tag {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+  }
+
+  .accordion-toggle-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .toggle-icon {
+    font-size: 1.1rem;
+  }
+
+  .accordion-content {
+    padding: 0 1rem 1.1rem 1rem;
+    padding-top: 0.85rem;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .service-deliverables {
+    padding: 0.75rem 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .deliverables-heading {
+    font-size: 0.7rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .deliverable-item {
+    font-size: 0.82rem;
+    gap: 0.5rem;
+  }
+
+  .service-cta-link {
+    width: 100%;
+    justify-content: center;
+    min-height: 42px;
+    font-size: 0.85rem;
   }
 
   .services-cta-bar {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    padding: 1.1rem 1.25rem;
   }
 
   .cta-bar-btn {
     width: 100%;
     justify-content: center;
+    min-height: 46px;
+  }
+
+  .image-frame-glow {
+    max-height: 240px;
+    border-radius: 16px;
+  }
+
+  .command-telemetry-card {
+    padding: 1.2rem;
+    border-radius: 16px;
+  }
+
+  .telemetry-chips-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .telemetry-chip {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .chip-val {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-ecosystem-section {
+    padding: 3.5rem 0 2.5rem 0;
+  }
+
+  .service-title {
+    font-size: 0.9rem;
   }
 
   .telemetry-chips-grid {
     grid-template-columns: 1fr;
+  }
+
+  .image-frame-glow {
+    max-height: 190px;
   }
 }

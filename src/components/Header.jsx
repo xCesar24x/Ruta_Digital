@@ -124,19 +124,25 @@ const Header = () => {
 
         {/* Mobile Drawer Menu */}
         {mobileMenuOpen && (
-          <div className="mobile-nav-menu container glass-card">
-            <a href="#servicios" onClick={() => scrollToSection('servicios')} className="mobile-nav-link">
-              Servicios
-            </a>
-            <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="mobile-nav-link">
-              Proyectos
-            </a>
-            <a href="#faq" onClick={() => scrollToSection('faq')} className="mobile-nav-link">
-              Preguntas Frecuentes
-            </a>
-            <a href="#contacto" onClick={() => scrollToSection('contacto')} className="mobile-nav-link">
-              Contacto
-            </a>
+          <div className="mobile-nav-menu container">
+            <div className="mobile-nav-links">
+              <a href="#servicios" onClick={() => scrollToSection('servicios')} className="mobile-nav-link">
+                <span>Servicios</span>
+                <ChevronDown size={14} className="mobile-link-chevron" />
+              </a>
+              <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="mobile-nav-link">
+                <span>Proyectos</span>
+                <ChevronDown size={14} className="mobile-link-chevron" />
+              </a>
+              <a href="#faq" onClick={() => scrollToSection('faq')} className="mobile-nav-link">
+                <span>Preguntas Frecuentes</span>
+                <ChevronDown size={14} className="mobile-link-chevron" />
+              </a>
+              <a href="#contacto" onClick={() => scrollToSection('contacto')} className="mobile-nav-link">
+                <span>Contacto</span>
+                <ChevronDown size={14} className="mobile-link-chevron" />
+              </a>
+            </div>
 
             <div className="mobile-actions">
               <button 
@@ -155,7 +161,8 @@ const Header = () => {
                 onClick={() => scrollToSection('contacto')} 
                 className="btn-primary mobile-cta-btn"
               >
-                Iniciar Proyecto <ArrowUpRight size={16} />
+                <span>Iniciar Proyecto</span>
+                <ArrowUpRight size={16} />
               </a>
             </div>
           </div>
