@@ -77,7 +77,7 @@ const LegalModal = ({ isOpen, type, onClose }) => {
 
   return (
     <div className="modal-overlay" ref={overlayRef} onClick={handleClose}>
-      <div className="modal-container glass-card" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container" ref={modalRef} onClick={(e) => e.stopPropagation()}>
         
         <div className="modal-header">
           <h2>{currentContent.title}</h2>
