@@ -87,6 +87,9 @@ const Header = () => {
             <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="nav-link">
               Proyectos
             </a>
+            <a href="#liderazgo" onClick={() => scrollToSection('liderazgo')} className="nav-link">
+              Liderazgo
+            </a>
             <a href="#faq" onClick={() => scrollToSection('faq')} className="nav-link">
               Preguntas Frecuentes
             </a>
@@ -132,6 +135,10 @@ const Header = () => {
               </a>
               <a href="#proyectos" onClick={() => scrollToSection('proyectos')} className="mobile-nav-link">
                 <span>Proyectos</span>
+                <ChevronDown size={14} className="mobile-link-chevron" />
+              </a>
+              <a href="#liderazgo" onClick={() => scrollToSection('liderazgo')} className="mobile-nav-link">
+                <span>Liderazgo</span>
                 <ChevronDown size={14} className="mobile-link-chevron" />
               </a>
               <a href="#faq" onClick={() => scrollToSection('faq')} className="mobile-nav-link">

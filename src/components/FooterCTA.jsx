@@ -161,6 +161,7 @@ const FooterCTA = () => {
               <ul className="footer-links">
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#liderazgo">Liderazgo</a></li>
                 <li><a href="#faq">Preguntas Frecuentes</a></li>
               </ul>
             </div>
