@@ -19,10 +19,9 @@ const Hero = ({ isLoaded = true }) => {
 
     try {
       splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
-      splitSubtitle = new SplitType(subtitleRef.current, { types: 'lines' });
       // Set initial states immediately to prevent flash and avoid reflow on load
       gsap.set(splitTitle.chars, { y: 60, opacity: 0, rotateX: -45 });
-      gsap.set(splitSubtitle.lines, { y: 25, opacity: 0 });
+      gsap.set(subtitleRef.current?.querySelectorAll('.hero-sub-line'), { y: 20, opacity: 0 });
       gsap.set(bgRef.current, { scale: 1.15, opacity: 0 });
       gsap.set(logoRef.current, { y: 35, opacity: 0, scale: 0.9 });
       gsap.set(badgeRef.current, { y: 20, opacity: 0 });
@@ -32,7 +31,6 @@ const Hero = ({ isLoaded = true }) => {
 
     return () => {
       splitTitle?.revert?.();
-      splitSubtitle?.revert?.();
     };
   }, []);
 
@@ -70,10 +68,10 @@ const Hero = ({ isLoaded = true }) => {
         );
       }
 
-      const subtitleLines = subtitleRef.current?.querySelectorAll('.line');
+      const subtitleLines = subtitleRef.current?.querySelectorAll('.hero-sub-line');
       if (subtitleLines?.length) {
         tl.to(subtitleLines,
-          { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
+          { y: 0, opacity: 1, stagger: 0.12, duration: 0.75, ease: "power2.out" },
           "-=0.4"
         );
       } else {
@@ -166,8 +164,12 @@ const Hero = ({ isLoaded = true }) => {
           <span className="text-glow">todas partes.</span>
         </h1>
         <p ref={subtitleRef} className="hero-subtitle">
-          Diseñamos plataformas web de alto impacto y automatizamos tu operación.<br/>
-          Soluciones digitales a medida para escalar tu presencia y eficiencia.
+          <span className="hero-sub-line">
+            Diseñamos plataformas web de alto impacto y automatizamos tu operación.
+          </span>
+          <span className="hero-sub-line">
+            Soluciones digitales a medida para escalar tu presencia y eficiencia.
+          </span>
         </p>
       </div>
     </section>
