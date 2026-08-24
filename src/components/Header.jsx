@@ -35,6 +35,12 @@ const Header = () => {
     setServicesDropdown(false);
   };
 
+  const handleOpenBooking = (e) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    window.dispatchEvent(new CustomEvent('open-booking-modal'));
+  };
+
   return (
     <header className={`site-header ${isScrolled ? 'header-scrolled' : ''}`}>
       {/* Main Floating Navbar */}
@@ -109,10 +115,14 @@ const Header = () => {
               <span>Portal Clientes</span>
             </button>
 
-            <a href="#contacto" onClick={() => scrollToSection('contacto')} className="nav-cta-btn">
+            <button 
+              type="button" 
+              onClick={handleOpenBooking} 
+              className="nav-cta-btn"
+            >
               <span>Iniciar Proyecto</span>
               <ArrowUpRight size={15} />
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -163,14 +173,14 @@ const Header = () => {
                 <span>Portal Clientes</span>
               </button>
 
-              <a 
-                href="#contacto" 
-                onClick={() => scrollToSection('contacto')} 
+              <button 
+                type="button" 
+                onClick={handleOpenBooking} 
                 className="btn-primary mobile-cta-btn"
               >
                 <span>Iniciar Proyecto</span>
                 <ArrowUpRight size={16} />
-              </a>
+              </button>
             </div>
           </div>
         )}
