@@ -221,7 +221,7 @@ Me gustaría agendar una asesoría gratuita:
   return (
     <div className="booking-modal-overlay" ref={overlayRef} onClick={handleClose}>
       <div 
-        className="booking-modal-container glass-card" 
+        className="booking-modal-container" 
         ref={modalRef} 
         onClick={(e) => e.stopPropagation()}
       >

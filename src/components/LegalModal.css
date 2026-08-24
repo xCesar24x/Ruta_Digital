@@ -18,11 +18,15 @@
   width: 100%;
   max-width: 800px;
   max-height: 85vh;
+  background: #0d120f !important;
+  background-color: #0d120f !important;
+  border: 1px solid rgba(31, 156, 89, 0.4);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   padding: 0 !important;
-  /* Override glass-card padding to handle scrolling better */
   overflow: hidden;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.98), 0 0 50px rgba(31, 156, 89, 0.15);
 }
 
 .modal-header {
