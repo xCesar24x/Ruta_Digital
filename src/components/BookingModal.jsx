@@ -178,7 +178,8 @@ Me gustaría agendar una asesoría gratuita:
 ¿Tienen disponibilidad en ese espacio para coordinar? ¡Muchas gracias!`;
 
     const encodedMsg = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/message/6TVSDVQC5DPFC1?text=${encodedMsg}`;
+    const phoneNumber = '50688226740';
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMsg}`;
     
     // Open in new tab
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

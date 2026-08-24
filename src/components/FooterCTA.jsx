@@ -149,7 +149,7 @@ const FooterCTA = () => {
                   </svg>
                 </a>
                 <a 
-                  href="https://wa.me/message/6TVSDVQC5DPFC1" 
+                  href="https://wa.me/50688226740" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="social-icon social-whatsapp" 
@@ -190,7 +190,7 @@ const FooterCTA = () => {
                 </li>
                 <li>
                   <Phone size={18} className="c-icon" />
-                  <a href="https://wa.me/message/6TVSDVQC5DPFC1" target="_blank" rel="noopener noreferrer">WhatsApp Directo</a>
+                  <a href="https://wa.me/50688226740" target="_blank" rel="noopener noreferrer">WhatsApp Directo</a>
                 </li>
                 <li>
                   <MapPin size={18} className="c-icon" />
