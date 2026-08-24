@@ -107,8 +107,8 @@ const FoundersSection = () => {
             <span>Liderazgo &amp; Visión</span>
           </div>
           <h2 className="founders-title">
-            La mente y la estrategia <br />
-            <span className="text-glow">detrás de cada solución.</span>
+            Visión estratégica <br />
+            <span className="text-glow">impulsando cada solución.</span>
           </h2>
           <p className="founders-subtitle">
             Ingeniería de software de vanguardia, inteligencia artificial y gestión financiera lideradas directamente por sus fundadores para garantizar excelencia en cada entrega.
