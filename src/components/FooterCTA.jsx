@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Settings } from 'lucide-react';
 import LegalModal from './LegalModal';
 import BookingModal from './BookingModal';
 import './FooterCTA.css';
@@ -197,6 +197,11 @@ const FooterCTA = () => {
                   <span>Costa Rica</span>
                 </li>
               </ul>
+              <div style={{ marginTop: '15px' }}>
+                <a href="/admin" aria-label="Panel de Administración" style={{ color: '#4ade80', opacity: 0.3, transition: 'opacity 0.2s ease', display: 'inline-block' }} onMouseOver={e => e.currentTarget.style.opacity = 1} onMouseOut={e => e.currentTarget.style.opacity = 0.3}>
+                  <Settings size={20} />
+                </a>
+              </div>
             </div>
 
           </div>
