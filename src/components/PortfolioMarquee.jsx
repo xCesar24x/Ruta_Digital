@@ -34,6 +34,11 @@ const projects = [
     img: '/Logos Proyectos finalizados/cabañas del bosque.png',
     url: 'https://www.cabanasdelbosque.lat/' 
   },
+  { 
+    name: 'Ferretería La Herradura', 
+    img: '/Logos Proyectos finalizados/Ferreteria La Herradura.jpeg',
+    url: 'https://www.ferreterialaherraduracr.com/' 
+  },
 ];
 
 const PortfolioMarquee = () => {
