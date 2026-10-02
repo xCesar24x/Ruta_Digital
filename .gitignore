@@ -33,3 +33,6 @@ Thumbs.db
 .vscode/
 *.sw?
 
+
+# Claude Code local config
+.claude/

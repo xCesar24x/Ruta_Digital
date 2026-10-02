@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, Phone, MapPin, ArrowRight, Settings } from 'lucide-react';
 import LegalModal from './LegalModal';
 import BookingModal from './BookingModal';
+import { scrollToId, smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
 import './FooterCTA.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,9 +13,13 @@ const FooterCTA = () => {
   const containerRef = useRef(null);
   const [modalState, setModalState] = useState({ isOpen: false, type: 'terminos' });
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingService, setBookingService] = useState(null);
 
   useEffect(() => {
-    const handleOpenBooking = () => setIsBookingOpen(true);
+    const handleOpenBooking = (e) => {
+      setBookingService(e.detail?.service ?? null);
+      setIsBookingOpen(true);
+    };
     window.addEventListener('open-booking-modal', handleOpenBooking);
     return () => window.removeEventListener('open-booking-modal', handleOpenBooking);
   }, []);
@@ -34,33 +39,11 @@ const FooterCTA = () => {
         { y: 25, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }
       )
-      .fromTo('.cta-content h2',
-        { 
-          opacity: 0, 
-          letterSpacing: '0.2em', 
-          filter: 'blur(18px) brightness(1.6)', 
-          scale: 1.06, 
-          y: 20 
-        },
-        { 
-          opacity: 1, 
-          letterSpacing: '-0.02em', 
-          filter: 'blur(0px) brightness(1)', 
-          scale: 1, 
-          y: 0, 
-          duration: 1.25, 
-          ease: 'power3.out' 
-        },
-        "-=0.4"
-      )
-      .fromTo('.cta-content p',
-        { opacity: 0, y: 15, filter: 'blur(8px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' },
-        "-=0.5"
-      )
+      .fromTo('.cta-content h2', smokeFrom(), smokeTo(), "-=0.4")
+      .fromTo('.cta-content p', fadeUpFrom(), fadeUpTo(), "-=0.5")
       .fromTo('.cta-banner .btn-primary',
-        { opacity: 0, scale: 0.92, y: 15 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.5)' },
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'transform' },
         "-=0.4"
       );
 
@@ -106,7 +89,7 @@ const FooterCTA = () => {
               </div>
               <button 
                 type="button"
-                onClick={() => setIsBookingOpen(true)}
+                onClick={() => { setBookingService(null); setIsBookingOpen(true); }}
                 className="btn-primary"
               >
                 Agendar Asesoría <ArrowRight size={20} />
@@ -166,10 +149,16 @@ const FooterCTA = () => {
             <div className="footer-col">
               <h3>Navegación</h3>
               <ul className="footer-links">
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#liderazgo">Liderazgo</a></li>
-                <li><a href="#faq">Preguntas Frecuentes</a></li>
+                {[
+                  ['servicios', 'Servicios'],
+                  ['proyectos', 'Proyectos'],
+                  ['liderazgo', 'Liderazgo'],
+                  ['faq', 'Preguntas Frecuentes'],
+                ].map(([id, label]) => (
+                  <li key={id}>
+                    <a href={`#${id}`} onClick={(e) => { e.preventDefault(); scrollToId(id); }}>{label}</a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -197,8 +186,8 @@ const FooterCTA = () => {
                   <span>Costa Rica</span>
                 </li>
               </ul>
-              <div style={{ marginTop: '15px' }}>
-                <a href="/admin" aria-label="Panel de Administración" style={{ color: '#4ade80', opacity: 0.3, transition: 'opacity 0.2s ease', display: 'inline-block' }} onMouseOver={e => e.currentTarget.style.opacity = 1} onMouseOut={e => e.currentTarget.style.opacity = 0.3}>
+              <div className="admin-link-row">
+                <a href="/admin" aria-label="Panel de Administración" className="admin-link">
                   <Settings size={20} />
                 </a>
               </div>
@@ -222,6 +211,7 @@ const FooterCTA = () => {
 
       <BookingModal 
         isOpen={isBookingOpen} 
+        initialService={bookingService}
         onClose={() => setIsBookingOpen(false)} 
       />
     </>

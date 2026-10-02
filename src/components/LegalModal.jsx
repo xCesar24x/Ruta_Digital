@@ -1,36 +1,51 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { X } from 'lucide-react';
+import { lockScroll, unlockScroll, prefersReducedMotion } from '../lib/motion';
 import './LegalModal.css';
 
 const LegalModal = ({ isOpen, type, onClose }) => {
   const overlayRef = useRef(null);
   const modalRef = useRef(null);
+  const isClosingRef = useRef(false);
+
+  // Exit is quicker than the entrance: the user already decided to leave
+  const handleClose = () => {
+    if (isClosingRef.current) return;
+    isClosingRef.current = true;
+    gsap.to(modalRef.current, { y: 8, opacity: 0, scale: 0.97, duration: 0.18, ease: 'power2.out' });
+    gsap.to(overlayRef.current, { opacity: 0, duration: 0.2, ease: 'power1.out', onComplete: onClose });
+  };
+  const handleCloseRef = useRef(handleClose);
+  handleCloseRef.current = handleClose;
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
+    if (!isOpen) return;
+    isClosingRef.current = false;
+    lockScroll();
 
-      gsap.fromTo(overlayRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3 }
-      );
+    const reduce = prefersReducedMotion();
+    gsap.fromTo(overlayRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.25, ease: 'power1.out' }
+    );
+    gsap.fromTo(modalRef.current,
+      reduce ? { opacity: 0 } : { y: 16, opacity: 0, scale: 0.97 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out' }
+    );
 
-      gsap.fromTo(modalRef.current,
-        { y: 50, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "power2.out", delay: 0.1 }
-      );
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') handleCloseRef.current();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      unlockScroll();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handleClose = () => {
-    gsap.to(modalRef.current, { y: 20, opacity: 0, scale: 0.95, duration: 0.3 });
-    gsap.to(overlayRef.current, { opacity: 0, duration: 0.3, delay: 0.1, onComplete: onClose });
-  };
 
   const content = {
     terminos: {
@@ -76,8 +91,15 @@ const LegalModal = ({ isOpen, type, onClose }) => {
   const currentContent = content[type] || content.terminos;
 
   return (
-    <div className="modal-overlay" ref={overlayRef} onClick={handleClose}>
-      <div className="modal-container glass-card" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay" ref={overlayRef} onClick={handleClose} data-lenis-prevent>
+      <div
+        className="modal-container glass-card"
+        ref={modalRef}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={currentContent.title}
+      >
 
         <div className="modal-header">
           <h2>{currentContent.title}</h2>

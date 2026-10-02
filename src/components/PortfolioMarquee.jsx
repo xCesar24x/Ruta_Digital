@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowUpRight } from 'lucide-react';
+import { prefersReducedMotion, hasFinePointer, smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
 import './PortfolioMarquee.css';
 
 const projects = [
@@ -46,12 +47,14 @@ const PortfolioMarquee = () => {
   const marqueeRef = useRef(null);
   
   useEffect(() => {
+    let ticker = null;
+
     const ctx = gsap.context(() => {
       // Infinite smooth ticker
-      gsap.to(marqueeRef.current, {
+      ticker = gsap.to(marqueeRef.current, {
         xPercent: -50,
         ease: "none",
-        duration: 25,
+        duration: prefersReducedMotion() ? 80 : 25,
         repeat: -1
       });
 
@@ -64,32 +67,26 @@ const PortfolioMarquee = () => {
         }
       });
 
-      tl.fromTo('.portfolio-header h2',
-        { 
-          opacity: 0, 
-          letterSpacing: '0.22em', 
-          filter: 'blur(18px) brightness(1.6)', 
-          scale: 1.08, 
-          y: 25 
-        },
-        { 
-          opacity: 1, 
-          letterSpacing: '-0.02em', 
-          filter: 'blur(0px) brightness(1)', 
-          scale: 1, 
-          y: 0, 
-          duration: 1.25, 
-          ease: 'power3.out' 
-        }
-      )
-      .fromTo('.portfolio-header p',
-        { opacity: 0, y: 20, filter: 'blur(8px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
-        "-=0.5"
-      );
+      tl.fromTo('.portfolio-header h2', smokeFrom(), smokeTo())
+        .fromTo('.portfolio-header p', fadeUpFrom(), fadeUpTo(), "-=0.5");
     }, sectionRef);
 
-    return () => ctx.revert();
+    // Ease the belt to a stop under the mouse so a card can actually be clicked,
+    // then ease it back up. Tweening timeScale keeps it interruptible.
+    const wrapper = marqueeRef.current?.parentElement;
+    const slowDown = () => gsap.to(ticker, { timeScale: 0, duration: 0.6, ease: 'power2.out', overwrite: true });
+    const speedUp = () => gsap.to(ticker, { timeScale: 1, duration: 0.8, ease: 'power2.in', overwrite: true });
+
+    if (wrapper && hasFinePointer()) {
+      wrapper.addEventListener('mouseenter', slowDown);
+      wrapper.addEventListener('mouseleave', speedUp);
+    }
+
+    return () => {
+      wrapper?.removeEventListener('mouseenter', slowDown);
+      wrapper?.removeEventListener('mouseleave', speedUp);
+      ctx.revert();
+    };
   }, []);
 
   // Double the array for seamless looping

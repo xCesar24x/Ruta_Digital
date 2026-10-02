@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
+import { smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
+import { pressableProps } from '../lib/a11y';
 import './FAQSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -68,29 +70,8 @@ const FAQSection = () => {
         }
       });
 
-      tl.fromTo('.faq-header h2',
-        { 
-          opacity: 0, 
-          letterSpacing: '0.22em', 
-          filter: 'blur(18px) brightness(1.6)', 
-          scale: 1.08, 
-          y: 25 
-        },
-        { 
-          opacity: 1, 
-          letterSpacing: '-0.02em', 
-          filter: 'blur(0px) brightness(1)', 
-          scale: 1, 
-          y: 0, 
-          duration: 1.25, 
-          ease: 'power3.out' 
-        }
-      )
-      .fromTo('.faq-header p',
-        { opacity: 0, y: 20, filter: 'blur(8px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
-        "-=0.5"
-      );
+      tl.fromTo('.faq-header h2', smokeFrom(), smokeTo())
+        .fromTo('.faq-header p', fadeUpFrom(), fadeUpTo({ duration: 0.7 }), "-=0.5");
     }, sectionRef);
 
     return () => ctx.revert();
@@ -122,24 +103,20 @@ const FAQSection = () => {
               <div 
                 key={index} 
                 className={`faq-item glass-card ${isOpen ? 'open' : ''}`}
-                onClick={() => toggleFAQ(index)}
               >
-                <div className="faq-question">
+                {/* Only the question toggles: selecting answer text shouldn't close it */}
+                <div className="faq-question" {...pressableProps(() => toggleFAQ(index), isOpen)}>
                   <div className="faq-question-title-group">
                     <span className="faq-tag-badge">{faq.tag}</span>
                     <h3>{faq.question}</h3>
                   </div>
                   <ChevronDown className={`faq-icon ${isOpen ? 'rotated' : ''}`} size={22} />
                 </div>
-                <div 
-                  className="faq-answer-wrapper" 
-                  style={{ 
-                    maxHeight: isOpen ? '400px' : '0px',
-                    opacity: isOpen ? 1 : 0
-                  }}
-                >
-                  <div className="faq-answer">
-                    <p>{faq.answer}</p>
+                <div className="faq-answer-wrapper">
+                  <div className="faq-answer-collapse">
+                    <div className="faq-answer">
+                      <p>{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
               </div>

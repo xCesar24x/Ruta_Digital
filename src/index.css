@@ -14,6 +14,11 @@
   /* Spacing & Layout */
   --section-padding: 6rem;
   --container-width: 1200px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --press-scale: 0.97;
 }
 
 /* Reset & Base */
@@ -39,18 +44,12 @@ html, body {
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   background-position: center center;
-  cursor: none; /* Hide default cursor on desktop */
 }
 
-/* Touch screens & Mobile Device Safe Cursor */
-@media (hover: none) and (pointer: coarse), (max-width: 900px) {
-  html, body {
-    cursor: auto !important;
-  }
-
-  .custom-cursor-arrow,
+/* The sparkle trail only makes sense with a mouse */
+@media (hover: none), (pointer: coarse) {
   .cursor-trail-canvas {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -64,7 +63,7 @@ html, body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Custom Cursor Arrow & Trail Canvas */
+/* Cursor Trail Canvas (native cursor stays visible) */
 .cursor-trail-canvas {
   position: fixed;
   inset: 0;
@@ -72,27 +71,6 @@ html, body {
   z-index: 9998;
   width: 100vw;
   height: 100vh;
-}
-
-.custom-cursor-arrow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate3d(-100px, -100px, 0);
-  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.8)) drop-shadow(0 0 15px rgba(22, 163, 74, 0.4));
-  will-change: transform;
-}
-
-.custom-cursor-arrow.active svg {
-  transform: scale(1.25) rotate(-6deg);
-  filter: drop-shadow(0 0 14px rgba(74, 222, 128, 1));
-}
-
-.custom-cursor-arrow svg {
-  transition: transform 0.2s ease, filter 0.2s ease;
-  display: block;
 }
 
 
@@ -142,13 +120,16 @@ p {
   border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 250ms var(--ease-out), border-color 200ms ease, box-shadow 250ms ease;
 }
 
-.glass-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(31, 156, 89, 0.3);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(31, 156, 89, 0.1);
+/* Hover lifts only with a real mouse: on touch they get "stuck" after a tap */
+@media (hover: hover) and (pointer: fine) {
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(31, 156, 89, 0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(31, 156, 89, 0.1);
+  }
 }
 
 .btn-primary {
@@ -167,14 +148,16 @@ p {
   border: none;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(31, 156, 89, 0.4);
-  transition: all 0.3s ease;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, box-shadow 200ms ease;
   min-height: 48px;
 }
 
-.btn-primary:hover {
-  background: #167a46;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(31, 156, 89, 0.6);
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: #167a46;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(31, 156, 89, 0.6);
+  }
 }
 
 .btn-secondary {
@@ -193,14 +176,73 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, border-color 200ms ease;
   min-height: 48px;
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+/* Press feedback: the interface "heard" the click */
+.btn-primary:active,
+.btn-secondary:active,
+.nav-cta-btn:active,
+.client-portal-btn:active,
+.service-tab-btn:active,
+.service-cta-link:active,
+.flip-hint-btn:active,
+.flip-back-btn:active,
+.founder-linkedin-btn:active,
+.social-icon:active,
+.time-chip:active,
+.method-card:active,
+.cal-nav-btn:active:not(:disabled),
+.calendar-day:active:not(:disabled),
+.booking-submit-btn:active,
+.booking-close-btn:active,
+.modal-close-btn:active {
+  transform: scale(var(--press-scale));
+  transition-duration: 100ms;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard focus that matches the brand (mouse clicks don't show it) */
+:focus-visible {
+  outline: 2px solid #4ade80;
+  outline-offset: 3px;
+}
+
+/* Reduced motion: keep fades and color, drop movement */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glass-card,
+  .btn-primary,
+  .btn-secondary {
+    transition-property: background-color, border-color, box-shadow, color;
+  }
 }
 
 /* Global Mobile Responsive Adjustments */

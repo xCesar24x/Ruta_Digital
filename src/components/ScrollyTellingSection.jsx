@@ -20,9 +20,18 @@ import {
   CheckCircle2,
   Zap
 } from 'lucide-react';
+import { hasFinePointer, openBooking, smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
+import { pressableProps } from '../lib/a11y';
 import './ScrollyTelling.css';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Maps each pillar to the matching option in the booking form
+const BOOKING_SERVICE_BY_CATEGORY = {
+  web: 'Desarrollo Web & Apps',
+  ai: 'Automatizaciones & IA',
+  data: 'Revenue & Dashboards',
+};
 
 const ALL_SERVICES = [
   // Pillar 1: Desarrollo & Ecosistemas Digitales
@@ -245,83 +254,39 @@ const ScrollyTellingSection = () => {
         }
       });
 
-      tl.fromTo('.services-header-badge', 
-        { opacity: 0, y: 20, filter: 'blur(10px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
-      )
-      .fromTo('.services-main-title',
-        { 
-          opacity: 0, 
-          letterSpacing: '0.18em', 
-          filter: 'blur(18px) brightness(1.6)', 
-          scale: 1.06, 
-          y: 25 
-        },
-        { 
-          opacity: 1, 
-          letterSpacing: '-0.02em', 
-          filter: 'blur(0px) brightness(1)', 
-          scale: 1, 
-          y: 0, 
-          duration: 1.25, 
-          ease: 'power3.out' 
-        },
-        "-=0.3"
-      )
-      .fromTo('.services-main-subtitle',
-        { opacity: 0, y: 20, filter: 'blur(8px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
-        "-=0.5"
-      );
-
-      // Subtle float animation on visual command center
-      gsap.to('.command-visual-container', {
-        y: -10,
-        duration: 3.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut'
-      });
+      tl.fromTo('.services-header-badge', fadeUpFrom(), fadeUpTo())
+        .fromTo('.services-main-title', smokeFrom(), smokeTo(), "-=0.3")
+        .fromTo('.services-main-subtitle', fadeUpFrom(), fadeUpTo({ duration: 0.7 }), "-=0.5");
     }, sectionRef);
 
-    // 3D tilt interaction on the visual graphic
+    // 3D tilt on the showcase image (decorative, mouse only). The sticky column
+    // no longer bobs up and down next to the list people are reading.
     const visual = visualRef.current;
-    const handleMouseMove = (e) => {
-      if (!visual) return;
-      const rect = visual.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const image = visual?.querySelector('.command-center-img');
+    if (!visual || !image || !hasFinePointer()) return () => ctx.revert();
 
-      gsap.to(visual.querySelector('.command-center-img'), {
-        rotationY: x * 12,
-        rotationX: -y * 12,
-        transformPerspective: 1000,
-        ease: 'power1.out',
-        duration: 0.5
-      });
+    gsap.set(image, { transformPerspective: 1000 });
+    const tiltY = gsap.quickTo(image, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+    const tiltX = gsap.quickTo(image, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+
+    const handleMouseMove = (e) => {
+      const rect = visual.getBoundingClientRect();
+      tiltY(((e.clientX - rect.left) / rect.width - 0.5) * 10);
+      tiltX(-((e.clientY - rect.top) / rect.height - 0.5) * 10);
     };
 
     const handleMouseLeave = () => {
-      if (!visual) return;
-      gsap.to(visual.querySelector('.command-center-img'), {
-        rotationY: 0,
-        rotationX: 0,
-        ease: 'power2.out',
-        duration: 0.7
-      });
+      tiltY(0);
+      tiltX(0);
     };
 
-    if (visual) {
-      visual.addEventListener('mousemove', handleMouseMove);
-      visual.addEventListener('mouseleave', handleMouseLeave);
-    }
+    visual.addEventListener('mousemove', handleMouseMove);
+    visual.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       ctx.revert();
-      if (visual) {
-        visual.removeEventListener('mousemove', handleMouseMove);
-        visual.removeEventListener('mouseleave', handleMouseLeave);
-      }
+      visual.removeEventListener('mousemove', handleMouseMove);
+      visual.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
@@ -383,6 +348,7 @@ const ScrollyTellingSection = () => {
                     <div 
                       className="service-card-top-strip"
                       onClick={() => toggleExpand(service.id)}
+                      aria-hidden="true"
                     >
                       <img 
                         src="/topedeservicios.png" 
@@ -399,7 +365,7 @@ const ScrollyTellingSection = () => {
                     {/* Header Row (Clickable) */}
                     <div 
                       className="accordion-header"
-                      onClick={() => toggleExpand(service.id)}
+                      {...pressableProps(() => toggleExpand(service.id), isExpanded)}
                     >
                       <div className="accordion-header-left">
                         <div className="accordion-title-group">
@@ -414,35 +380,35 @@ const ScrollyTellingSection = () => {
                     </div>
 
                     {/* Expandable Body (Pure textual details without internal images) */}
-                    <div 
-                      className="accordion-content-wrapper"
-                      style={{ 
-                        maxHeight: isExpanded ? '500px' : '0px',
-                        opacity: isExpanded ? 1 : 0
-                      }}
-                    >
-                      <div className="accordion-content">
-                        <p className="service-desc">{service.shortDesc}</p>
-                        
-                        {/* Key Deliverables / Features List */}
-                        <div className="service-deliverables">
-                          <span className="deliverables-heading">Alcance y Capacidades:</span>
-                          <ul className="deliverables-list">
-                            {service.bullets.map((bullet, idx) => (
-                              <li key={idx} className="deliverable-item">
-                                <CheckCircle2 size={15} className="deliverable-check" />
-                                <span>{bullet}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                    <div className="accordion-content-wrapper" inert={isExpanded ? undefined : ''}>
+                      <div className="accordion-collapse">
+                        <div className="accordion-content">
+                          <p className="service-desc">{service.shortDesc}</p>
+                          
+                          {/* Key Deliverables / Features List */}
+                          <div className="service-deliverables">
+                            <span className="deliverables-heading">Alcance y Capacidades:</span>
+                            <ul className="deliverables-list">
+                              {service.bullets.map((bullet, idx) => (
+                                <li key={idx} className="deliverable-item">
+                                  <CheckCircle2 size={15} className="deliverable-check" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
 
-                        {/* Quick Quote Action */}
-                        <div className="accordion-action-footer">
-                          <a href="#contacto" className="service-cta-link">
-                            <span>Cotizar {service.title}</span>
-                            <ArrowRight size={15} />
-                          </a>
+                          {/* Quick Quote Action */}
+                          <div className="accordion-action-footer">
+                            <button
+                              type="button"
+                              className="service-cta-link"
+                              onClick={() => openBooking(BOOKING_SERVICE_BY_CATEGORY[service.category])}
+                            >
+                              <span>Cotizar {service.title}</span>
+                              <ArrowRight size={15} />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -460,9 +426,9 @@ const ScrollyTellingSection = () => {
                   <p>Diseñamos la arquitectura exacta que tu operación requiere.</p>
                 </div>
               </div>
-              <a href="#contacto" className="btn-primary cta-bar-btn">
+              <button type="button" className="btn-primary cta-bar-btn" onClick={() => openBooking()}>
                 Iniciar Proyecto <ArrowRight size={16} />
-              </a>
+              </button>
             </div>
           </div>
 

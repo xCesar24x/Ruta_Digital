@@ -72,13 +72,15 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 200ms var(--ease-out), color 200ms ease, background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
   backdrop-filter: blur(8px);
 }
 
-.social-icon:hover {
-  color: #ffffff;
-  transform: translateY(-3px) scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .social-icon:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
 }
 
 .social-instagram:hover {
@@ -111,7 +113,7 @@
 .footer-links a {
   color: var(--text-secondary);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 150ms ease;
 }
 
 .footer-links a:hover {
@@ -146,6 +148,22 @@
 
 .contact-info a:hover {
   color: #fff;
+}
+
+.admin-link-row {
+  margin-top: 15px;
+}
+
+.admin-link {
+  display: inline-block;
+  color: #4ade80;
+  opacity: 0.3;
+  transition: opacity 200ms ease;
+}
+
+.admin-link:hover,
+.admin-link:focus-visible {
+  opacity: 1;
 }
 
 .footer-bottom {

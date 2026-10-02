@@ -10,134 +10,113 @@ import ScrollyTellingSection from './components/ScrollyTellingSection';
 import FoundersSection from './components/FoundersSection';
 import FAQSection from './components/FAQSection';
 import FooterCTA from './components/FooterCTA';
+import { registerLenis, prefersReducedMotion, hasFinePointer } from './lib/motion';
 import './index.css'; 
 
 gsap.registerPlugin(ScrollTrigger);
 
 function LandingPage() {
-  const cursorRef = useRef(null);
   const canvasRef = useRef(null);
-  const [isCursorActive, setIsCursorActive] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Lenis Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      smoothWheel: true,
-      smoothTouch: true,
-      touchMultiplier: 2,
-      syncTouch: true,
-      infinite: false,
-    });
+    const reduceMotion = prefersReducedMotion();
+    let lenis = null;
+    let tickerCb = null;
 
-    lenis.on('scroll', ScrollTrigger.update);
+    // Lenis smooth scroll (wheel only). Touch keeps native momentum scrolling:
+    // emulating it with syncTouch feels laggy and "off" on phones.
+    if (!reduceMotion) {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      registerLenis(lenis);
 
-    const tickerCb = (time) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
+      lenis.on('scroll', ScrollTrigger.update);
+      tickerCb = (time) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(tickerCb);
+      gsap.ticker.lagSmoothing(0);
+    }
 
-    // Trail particles & Canvas setup
+    // Cursor sparkle trail. Native cursor stays visible; the loop only runs
+    // while there are particles, so an idle page costs nothing.
     const canvas = canvasRef.current;
     const ctx = canvas ? canvas.getContext('2d') : null;
+    const trailEnabled = ctx && hasFinePointer() && !reduceMotion;
     let particles = [];
-    let animationFrameId;
+    let animationFrameId = null;
+    let lastPos = { x: -100, y: -100 };
 
     const resizeCanvas = () => {
-      if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+      if (!canvas) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    let lastPos = { x: -100, y: -100 };
+    const renderLoop = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.alpha -= p.decay;
+        p.size *= 0.95;
+
+        if (p.alpha <= 0 || p.size <= 0.2) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        // Soft glow without shadowBlur (which is very expensive per particle)
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(34, 197, 94, ${p.alpha * 0.18})`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(74, 222, 128, ${p.alpha})`;
+        ctx.fill();
+      }
+
+      animationFrameId = particles.length ? requestAnimationFrame(renderLoop) : null;
+    };
 
     const moveCursor = (e) => {
       const x = e.clientX;
       const y = e.clientY;
-
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      }
-
-      // Add light trail sparkle particles if cursor moved
-      const dist = Math.hypot(x - lastPos.x, y - lastPos.y);
-      if (dist > 3) {
+      if (Math.hypot(x - lastPos.x, y - lastPos.y) > 4) {
         particles.push({
-          x: x + 2,
-          y: y + 2,
-          alpha: 0.85,
-          size: Math.random() * 3.5 + 2,
-          decay: 0.035 + Math.random() * 0.015,
+          x: x + 6,
+          y: y + 10,
+          alpha: 0.7,
+          size: Math.random() * 2.5 + 1.5,
+          decay: 0.04 + Math.random() * 0.015,
         });
         lastPos = { x, y };
+        if (!animationFrameId) animationFrameId = requestAnimationFrame(renderLoop);
       }
     };
 
-    const renderLoop = () => {
-      if (ctx && canvas) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.alpha -= p.decay;
-          p.size *= 0.95;
-
-          if (p.alpha <= 0 || p.size <= 0.2) {
-            particles.splice(i, 1);
-            i--;
-            continue;
-          }
-
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(74, 222, 128, ${p.alpha})`;
-          ctx.shadowColor = '#22c55e';
-          ctx.shadowBlur = 10;
-          ctx.fill();
-          ctx.restore();
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(renderLoop);
-    };
-
-    animationFrameId = requestAnimationFrame(renderLoop);
-
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      if (
-        target.tagName.toLowerCase() === 'button' ||
-        target.tagName.toLowerCase() === 'a' ||
-        target.closest('button') ||
-        target.closest('a') ||
-        target.classList.contains('glass-card')
-      ) {
-        setIsCursorActive(true);
-      } else {
-        setIsCursorActive(false);
-      }
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    if (trailEnabled) {
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('mousemove', moveCursor, { passive: true });
+    }
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove(tickerCb);
-      cancelAnimationFrame(animationFrameId);
+      if (lenis) {
+        registerLenis(null);
+        lenis.destroy();
+        gsap.ticker.remove(tickerCb);
+      }
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleMouseOver);
     };
   }, []);
 
@@ -152,28 +131,7 @@ function LandingPage() {
     <>
       <PreLoader onComplete={handlePreloaderComplete} />
       <div className="noise-overlay"></div>
-      <canvas ref={canvasRef} className="cursor-trail-canvas"></canvas>
-      <div 
-        ref={cursorRef} 
-        className={`custom-cursor-arrow ${isCursorActive ? 'active' : ''}`}
-      >
-        <svg 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path 
-            d="M3 2L20 11L12.5 13.8L9 22L3 2Z" 
-            fill="#16a34a" 
-            stroke="#4ade80" 
-            strokeWidth="1.8" 
-            strokeLinejoin="round"
-          />
-          <circle cx="5.5" cy="4.5" r="1.5" fill="#86efac" />
-        </svg>
-      </div>
+      <canvas ref={canvasRef} className="cursor-trail-canvas" aria-hidden="true"></canvas>
       <Header />
       <main>
         <Hero isLoaded={isLoaded} />

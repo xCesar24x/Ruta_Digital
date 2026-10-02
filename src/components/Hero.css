@@ -139,6 +139,35 @@
   text-wrap: pretty;
 }
 
+.hero-title {
+  perspective: 800px; /* gives the per-letter rotateX intro real depth */
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* Sits on a busy photo: needs a darker glass than the default secondary button */
+.hero-cta-secondary {
+  background: rgba(5, 5, 5, 0.5);
+  border-color: rgba(255, 255, 255, 0.22);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-cta-arrow {
+  transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-cta:hover .hero-cta-arrow {
+    transform: translateX(3px);
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     min-height: 100svh;
@@ -192,6 +221,15 @@
     line-height: 1.48;
     gap: 0.45rem;
     max-width: 100%;
+  }
+
+  .hero-actions {
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+
+  .hero-actions > * {
+    flex: 1 1 auto;
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sparkles, RotateCw, ArrowUpRight, Code, TrendingUp, CheckCircle, ShieldCheck } from 'lucide-react';
+import { smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
 import './FoundersSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,39 +58,14 @@ const FoundersSection = () => {
         }
       });
 
-      tl.fromTo('.founders-header-badge',
-        { opacity: 0, y: 20, filter: 'blur(10px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
-      )
-      .fromTo('.founders-title',
-        { 
-          opacity: 0, 
-          letterSpacing: '0.18em', 
-          filter: 'blur(18px) brightness(1.6)', 
-          scale: 1.06, 
-          y: 25 
-        },
-        { 
-          opacity: 1, 
-          letterSpacing: '-0.02em', 
-          filter: 'blur(0px) brightness(1)', 
-          scale: 1, 
-          y: 0, 
-          duration: 1.2, 
-          ease: 'power3.out' 
-        },
-        "-=0.3"
-      )
-      .fromTo('.founders-subtitle',
-        { opacity: 0, y: 20, filter: 'blur(8px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
-        "-=0.5"
-      )
-      .fromTo('.founder-3d-card-wrapper',
-        { opacity: 0, y: 35, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, stagger: 0.2, duration: 0.8, ease: 'back.out(1.4)' },
-        "-=0.4"
-      );
+      tl.fromTo('.founders-header-badge', fadeUpFrom(), fadeUpTo())
+        .fromTo('.founders-title', smokeFrom(), smokeTo(), "-=0.3")
+        .fromTo('.founders-subtitle', fadeUpFrom(), fadeUpTo({ duration: 0.7 }), "-=0.5")
+        .fromTo('.founder-3d-card-wrapper',
+          { opacity: 0, y: 24, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.7, ease: 'power3.out', clearProps: 'transform' },
+          "-=0.4"
+        );
     }, sectionRef);
 
     return () => ctx.revert();

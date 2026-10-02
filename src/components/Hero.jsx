@@ -1,30 +1,37 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import { Globe, Bot, Sparkles } from 'lucide-react';
+import { Globe, Bot, Sparkles, ArrowRight } from 'lucide-react';
+import { prefersReducedMotion, hasFinePointer, openBooking, scrollToId } from '../lib/motion';
 import './Hero.css';
 
 const Hero = ({ isLoaded = true }) => {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
+  const glowRef = useRef(null);
   const logoRef = useRef(null);
   const badgeRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
+  const actionsRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     let splitTitle = null;
-    let splitSubtitle = null;
 
     try {
       splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
       // Set initial states immediately to prevent flash and avoid reflow on load
-      gsap.set(splitTitle.chars, { y: 60, opacity: 0, rotateX: -45 });
-      gsap.set(subtitleRef.current?.querySelectorAll('.hero-sub-line'), { y: 20, opacity: 0 });
-      gsap.set(bgRef.current, { scale: 1.15, opacity: 0 });
-      gsap.set(logoRef.current, { y: 35, opacity: 0, scale: 0.9 });
-      gsap.set(badgeRef.current, { y: 20, opacity: 0 });
+      if (prefersReducedMotion()) {
+        gsap.set([bgRef.current, logoRef.current, badgeRef.current, titleRef.current, subtitleRef.current, actionsRef.current], { opacity: 0 });
+      } else {
+        gsap.set(splitTitle.chars, { y: 60, opacity: 0, rotateX: -45 });
+        gsap.set(subtitleRef.current?.querySelectorAll('.hero-sub-line'), { y: 20, opacity: 0 });
+        gsap.set(bgRef.current, { scale: 1.15, opacity: 0 });
+        gsap.set(logoRef.current, { y: 35, opacity: 0, scale: 0.9 });
+        gsap.set(badgeRef.current, { y: 20, opacity: 0 });
+        gsap.set(actionsRef.current?.children, { y: 16, opacity: 0 });
+      }
     } catch (e) {
       console.warn('SplitType error:', e);
     }
@@ -37,6 +44,12 @@ const Hero = ({ isLoaded = true }) => {
   useEffect(() => {
     if (!isLoaded || hasAnimatedRef.current) return;
     hasAnimatedRef.current = true;
+
+    if (prefersReducedMotion()) {
+      gsap.to([bgRef.current], { opacity: 0.85, duration: 0.5 });
+      gsap.to([logoRef.current, badgeRef.current, titleRef.current, subtitleRef.current, actionsRef.current], { opacity: 1, duration: 0.5 });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.05 });
@@ -81,6 +94,11 @@ const Hero = ({ isLoaded = true }) => {
         );
       }
 
+      tl.to(actionsRef.current?.children,
+        { y: 0, opacity: 1, stagger: 0.06, duration: 0.6, ease: "power3.out", clearProps: "transform" },
+        "-=0.45"
+      );
+
       gsap.to(bgRef.current, {
         yPercent: 30,
         ease: "none",
@@ -93,43 +111,32 @@ const Hero = ({ isLoaded = true }) => {
       });
     }, heroRef);
 
-    const handleMouseMove = (e) => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+    // Decorative glow follows the mouse. The text itself stays still:
+    // tilting a headline while someone reads it is tiring, not premium.
+    let handleMouseMove = null;
+    if (hasFinePointer() && glowRef.current) {
+      const glowX = gsap.quickTo(glowRef.current, 'x', { duration: 0.8, ease: 'power3.out' });
+      const glowY = gsap.quickTo(glowRef.current, 'y', { duration: 0.8, ease: 'power3.out' });
 
-      const xPos = (e.clientX / window.innerWidth - 0.5) * 10;
-      const yPos = (e.clientY / window.innerHeight - 0.5) * -10;
-      
-      gsap.to('.hero-glow', {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.8,
-        ease: "power2.out"
-      });
-      
-      gsap.to('.hero-content', {
-        rotationX: yPos,
-        rotationY: xPos,
-        transformPerspective: 1000,
-        transformOrigin: "center center",
-        duration: 0.5,
-        ease: "power1.out"
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
+      handleMouseMove = (e) => {
+        if (!heroRef.current) return;
+        const rect = heroRef.current.getBoundingClientRect();
+        if (rect.bottom < 0) return; // Hero is off-screen
+        glowX(e.clientX - rect.left);
+        glowY(e.clientY - rect.top);
+      };
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
 
     return () => {
       ctx.revert();
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (handleMouseMove) window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isLoaded]);
 
   return (
     <section ref={heroRef} className="hero-section">
-      <div className="hero-glow"></div>
+      <div ref={glowRef} className="hero-glow"></div>
       <div 
         ref={bgRef} 
         className="hero-bg" 
@@ -171,6 +178,20 @@ const Hero = ({ isLoaded = true }) => {
             Soluciones digitales a medida para escalar tu presencia y eficiencia.
           </span>
         </p>
+
+        <div ref={actionsRef} className="hero-actions">
+          <button type="button" className="btn-primary hero-cta" onClick={() => openBooking()}>
+            <span>Agendar asesoría gratuita</span>
+            <ArrowRight size={18} className="hero-cta-arrow" />
+          </button>
+          <a
+            href="#proyectos"
+            className="btn-secondary hero-cta-secondary"
+            onClick={(e) => { e.preventDefault(); scrollToId('proyectos'); }}
+          >
+            Ver proyectos
+          </a>
+        </div>
       </div>
     </section>
   );

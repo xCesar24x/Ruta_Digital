@@ -1,6 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { prefersReducedMotion } from '../lib/motion';
 import './PreLoader.css';
+
+const SEEN_KEY = 'rd-preloader-seen';
+
+// The intro is a brand moment the first time. On every reload after that it's
+// just ~2.5s standing between the visitor and the content.
+const shouldSkipIntro = () => {
+  if (prefersReducedMotion()) return true;
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === '1';
+  } catch {
+    return false;
+  }
+};
 
 const PreLoader = ({ onComplete }) => {
   const containerRef = useRef(null);
@@ -10,12 +24,24 @@ const PreLoader = ({ onComplete }) => {
   const laserRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
-  const [isDone, setIsDone] = useState(false);
+  const [skipIntro] = useState(shouldSkipIntro);
+  const [isDone, setIsDone] = useState(skipIntro);
   const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     if (hasAnimatedRef.current) return;
     hasAnimatedRef.current = true;
+
+    if (skipIntro) {
+      onCompleteRef.current?.();
+      return;
+    }
+
+    try {
+      sessionStorage.setItem(SEEN_KEY, '1');
+    } catch {
+      // Private mode / blocked storage: the intro simply plays again next time
+    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
