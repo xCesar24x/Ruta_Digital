@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Phone, MapPin, Settings } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Settings } from 'lucide-react';
 import LegalModal from './LegalModal';
-import WhatsAppIcon from './WhatsAppIcon';
+import BookingModal from './BookingModal';
 import { scrollToId, smokeFrom, smokeTo, fadeUpFrom, fadeUpTo } from '../lib/motion';
-import { whatsappLinkProps } from '../lib/whatsapp';
-import { MESSAGES, VISIBLE_CASES } from '../content/site';
 import './FooterCTA.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,6 +12,17 @@ gsap.registerPlugin(ScrollTrigger);
 const FooterCTA = () => {
   const containerRef = useRef(null);
   const [modalState, setModalState] = useState({ isOpen: false, type: 'terminos' });
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingService, setBookingService] = useState(null);
+
+  useEffect(() => {
+    const handleOpenBooking = (e) => {
+      setBookingService(e.detail?.service ?? null);
+      setIsBookingOpen(true);
+    };
+    window.addEventListener('open-booking-modal', handleOpenBooking);
+    return () => window.removeEventListener('open-booking-modal', handleOpenBooking);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -75,13 +84,16 @@ const FooterCTA = () => {
           <div className="container">
             <div className="cta-banner glass-card">
               <div className="cta-content">
-                <h2>¿No sabés cuál te sirve?</h2>
-                <p>Escribinos y en 30 minutos te decimos qué haríamos y cuánto costaría. Sin compromiso.</p>
+                <h2>¿Listo para llevar tu negocio al siguiente nivel?</h2>
+                <p>Agenda una asesoría gratuita y descubre cómo la tecnología y la IA pueden transformar tu operación.</p>
               </div>
-              <a className="btn-primary" {...whatsappLinkProps(MESSAGES.general)}>
-                <WhatsAppIcon size={20} />
-                Escribinos por WhatsApp
-              </a>
+              <button 
+                type="button"
+                onClick={() => { setBookingService(null); setIsBookingOpen(true); }}
+                className="btn-primary"
+              >
+                Agendar Asesoría <ArrowRight size={20} />
+              </button>
             </div>
           </div>
         </div>
@@ -92,7 +104,7 @@ const FooterCTA = () => {
             <div className="footer-col brand-col">
               <img src="/logo.png" alt="Ruta Digital Logo" className="footer-logo" />
               <p className="brand-desc">
-                Webs que venden, automatización y revenue para pymes y empresas en Costa Rica y LATAM.
+                Diseñamos plataformas web de alto impacto y automatizamos tu operación. Soluciones digitales a medida para escalar tu presencia y eficiencia.
               </p>
               <div className="social-links">
                 <a 
@@ -120,7 +132,9 @@ const FooterCTA = () => {
                   </svg>
                 </a>
                 <a 
-                  {...whatsappLinkProps()}
+                  href="https://wa.me/50688226740" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
                   className="social-icon social-whatsapp" 
                   aria-label="WhatsApp"
                 >
@@ -136,10 +150,9 @@ const FooterCTA = () => {
               <h3>Navegación</h3>
               <ul className="footer-links">
                 {[
-                  ['servicios', 'Servicios y precios'],
-                  ...(VISIBLE_CASES.length ? [['casos', 'Casos']] : []),
-                  ['planes', 'Planes mensuales'],
-                  ['liderazgo', 'Equipo'],
+                  ['servicios', 'Servicios'],
+                  ['proyectos', 'Proyectos'],
+                  ['liderazgo', 'Liderazgo'],
                   ['faq', 'Preguntas Frecuentes'],
                 ].map(([id, label]) => (
                   <li key={id}>
@@ -166,7 +179,7 @@ const FooterCTA = () => {
                 </li>
                 <li>
                   <Phone size={18} className="c-icon" />
-                  <a {...whatsappLinkProps()}>WhatsApp Directo</a>
+                  <a href="https://wa.me/50688226740" target="_blank" rel="noopener noreferrer">WhatsApp Directo</a>
                 </li>
                 <li>
                   <MapPin size={18} className="c-icon" />
@@ -194,6 +207,12 @@ const FooterCTA = () => {
         isOpen={modalState.isOpen} 
         type={modalState.type} 
         onClose={closeModal} 
+      />
+
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        initialService={bookingService}
+        onClose={() => setIsBookingOpen(false)} 
       />
     </>
   );

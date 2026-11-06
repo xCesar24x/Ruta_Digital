@@ -96,7 +96,7 @@
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1.25rem;
@@ -136,7 +136,7 @@
 
 .hero-sub-line {
   display: block;
-  text-wrap: balance; /* avoids a lonely last word like "en turismo." */
+  text-wrap: pretty;
 }
 
 .hero-title {
@@ -163,18 +163,9 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .hero-cta-secondary:hover .hero-cta-arrow {
-    transform: translateY(2px);
+  .hero-cta:hover .hero-cta-arrow {
+    transform: translateX(3px);
   }
-}
-
-.hero-reassurance {
-  flex-basis: 100%;
-  margin-top: 0.15rem;
-  padding-left: 0.5rem;
-  font-size: 0.88rem;
-  color: #cbd5e1;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 768px) {
@@ -239,12 +230,6 @@
 
   .hero-actions > * {
     flex: 1 1 auto;
-  }
-
-  .hero-reassurance {
-    padding-left: 0;
-    text-align: center;
-    font-size: 0.82rem;
   }
 }
 

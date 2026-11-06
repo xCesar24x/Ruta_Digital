@@ -16,7 +16,7 @@ const projects = [
     url: null 
   },
   { 
-    name: "Mr. John's Barbería", 
+    name: 'Mrs Jhons Barbier', 
     img: '/Logos Proyectos finalizados/Mrs Jhons Barbier.png',
     url: 'https://www.mrjohnsbarbier.com/' 
   },
@@ -112,8 +112,8 @@ const PortfolioMarquee = () => {
 
       <div className="container portfolio-content">
         <div className="portfolio-header">
-          <h2>Negocios que ya confían en nosotros</h2>
-          <p>De ferreterías y barberías a cabañas: 8 negocios en Costa Rica.</p>
+          <h2>Proyectos Destacados</h2>
+          <p>Confían en nosotros para transformar su presencia digital</p>
         </div>
       </div>
       

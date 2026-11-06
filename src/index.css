@@ -18,7 +18,6 @@
   /* Motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* iOS-like sheet curve */
   --press-scale: 0.97;
 }
 
@@ -193,85 +192,22 @@ p {
 .btn-primary:active,
 .btn-secondary:active,
 .nav-cta-btn:active,
+.client-portal-btn:active,
+.service-tab-btn:active,
+.service-cta-link:active,
 .flip-hint-btn:active,
 .flip-back-btn:active,
 .founder-linkedin-btn:active,
 .social-icon:active,
+.time-chip:active,
+.method-card:active,
+.cal-nav-btn:active:not(:disabled),
+.calendar-day:active:not(:disabled),
+.booking-submit-btn:active,
+.booking-close-btn:active,
 .modal-close-btn:active {
   transform: scale(var(--press-scale));
   transition-duration: 100ms;
-}
-
-/* Shared section heading (Servicios, Casos, Planes) */
-.section-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto 3.5rem;
-}
-
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1.1rem;
-  background: rgba(34, 197, 94, 0.08);
-  border: 1px solid rgba(34, 197, 94, 0.25);
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #4ade80;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-}
-
-.section-title {
-  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  text-wrap: balance;
-}
-
-.section-subtitle {
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  line-height: 1.6;
-  max-width: 620px;
-  text-wrap: pretty;
-}
-
-@media (max-width: 768px) {
-  .section-head {
-    margin-bottom: 2.25rem;
-  }
-
-  .section-badge {
-    font-size: 0.72rem;
-    padding: 0.35rem 0.85rem;
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.9rem, 7.5vw, 2.6rem);
-  }
-}
-
-/* Badge icon used by the Liderazgo heading (used to live in the old services CSS) */
-.badge-sparkle {
-  color: #4ade80;
-}
-
-/* Text still to be filled in (only visible in local dev) */
-.is-placeholder {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.08);
-  outline: 1px dashed rgba(251, 191, 36, 0.55);
-  outline-offset: 2px;
-  border-radius: 4px;
 }
 
 .sr-only {
