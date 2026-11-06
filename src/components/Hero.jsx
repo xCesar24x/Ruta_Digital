@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import { Globe, Bot, Sparkles, ArrowRight } from 'lucide-react';
-import { prefersReducedMotion, hasFinePointer, openBooking, scrollToId } from '../lib/motion';
+import { MapPin, ArrowDown } from 'lucide-react';
+import { prefersReducedMotion, hasFinePointer, scrollToId } from '../lib/motion';
+import { whatsappLinkProps } from '../lib/whatsapp';
+import { MESSAGES } from '../content/site';
+import WhatsAppIcon from './WhatsAppIcon';
 import './Hero.css';
 
 const Hero = ({ isLoaded = true }) => {
@@ -71,7 +74,7 @@ const Hero = ({ isLoaded = true }) => {
       const titleChars = titleRef.current?.querySelectorAll('.char');
       if (titleChars?.length) {
         tl.to(titleChars,
-          { y: 0, opacity: 1, rotateX: 0, stagger: 0.025, duration: 0.8, ease: "back.out(1.7)" },
+          { y: 0, opacity: 1, rotateX: 0, stagger: 0.015, duration: 0.8, ease: "back.out(1.7)" },
           "-=0.5"
         );
       } else {
@@ -151,46 +154,40 @@ const Hero = ({ isLoaded = true }) => {
           className="hero-logo" 
         />
         
-        {/* Studio Identity & Services Badges */}
+        {/* Who we serve */}
         <div ref={badgeRef} className="hero-services-badge">
           <span className="badge-item studio-highlight">
-            <Sparkles size={14} className="badge-icon" /> Global Creative &amp; Technology Studio
-          </span>
-          <span className="badge-separator">•</span>
-          <span className="badge-item">
-            <Globe size={14} className="badge-icon" /> Desarrollo Web
-          </span>
-          <span className="badge-separator">•</span>
-          <span className="badge-item">
-            <Bot size={14} className="badge-icon" /> Automatizaciones
+            <MapPin size={14} className="badge-icon" /> Costa Rica · Pymes y empresas en LATAM
           </span>
         </div>
 
         <h1 ref={titleRef} className="hero-title">
-          Tu negocio en<br/>
-          <span className="text-glow">todas partes.</span>
+          Más clientes por WhatsApp.<br/>
+          <span className="text-glow">Menos horas en Excel.</span>
         </h1>
         <p ref={subtitleRef} className="hero-subtitle">
           <span className="hero-sub-line">
-            Diseñamos plataformas web de alto impacto y automatizamos tu operación.
+            Hacemos webs que venden, automatizamos reportes y procesos, y ajustamos precios en turismo.
           </span>
           <span className="hero-sub-line">
-            Soluciones digitales a medida para escalar tu presencia y eficiencia.
+            Precio claro desde el inicio y soporte cada mes.
           </span>
         </p>
 
         <div ref={actionsRef} className="hero-actions">
-          <button type="button" className="btn-primary hero-cta" onClick={() => openBooking()}>
-            <span>Agendar asesoría gratuita</span>
-            <ArrowRight size={18} className="hero-cta-arrow" />
-          </button>
-          <a
-            href="#proyectos"
-            className="btn-secondary hero-cta-secondary"
-            onClick={(e) => { e.preventDefault(); scrollToId('proyectos'); }}
-          >
-            Ver proyectos
+          <a className="btn-primary hero-cta" {...whatsappLinkProps(MESSAGES.general)}>
+            <WhatsAppIcon size={19} />
+            <span>Agendar diagnóstico gratis</span>
           </a>
+          <a
+            href="#servicios"
+            className="btn-secondary hero-cta-secondary"
+            onClick={(e) => { e.preventDefault(); scrollToId('servicios'); }}
+          >
+            <span>Ver servicios y precios</span>
+            <ArrowDown size={17} className="hero-cta-arrow" />
+          </a>
+          <p className="hero-reassurance">Llamada de 30 minutos · Sin compromiso</p>
         </div>
       </div>
     </section>

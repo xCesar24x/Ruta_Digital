@@ -6,7 +6,9 @@ import PreLoader from './components/PreLoader';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import PortfolioMarquee from './components/PortfolioMarquee';
-import ScrollyTellingSection from './components/ScrollyTellingSection';
+import OffersSection from './components/OffersSection';
+import CasesSection from './components/CasesSection';
+import PlansSection from './components/PlansSection';
 import FoundersSection from './components/FoundersSection';
 import FAQSection from './components/FAQSection';
 import FooterCTA from './components/FooterCTA';
@@ -136,7 +138,9 @@ function LandingPage() {
       <main>
         <Hero isLoaded={isLoaded} />
         <PortfolioMarquee />
-        <ScrollyTellingSection />
+        <OffersSection />
+        <CasesSection />
+        <PlansSection />
         <FoundersSection />
         <FAQSection />
         <FooterCTA />

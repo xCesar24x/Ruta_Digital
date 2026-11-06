@@ -16,7 +16,7 @@ const projects = [
     url: null 
   },
   { 
-    name: 'Mrs Jhons Barbier', 
+    name: "Mr. John's Barbería", 
     img: '/Logos Proyectos finalizados/Mrs Jhons Barbier.png',
     url: 'https://www.mrjohnsbarbier.com/' 
   },
@@ -39,6 +39,11 @@ const projects = [
     name: 'Ferretería La Herradura', 
     img: '/Logos Proyectos finalizados/Ferreteria La Herradura.jpeg',
     url: 'https://www.ferreterialaherraduracr.com/' 
+  },
+  { 
+    name: 'Gambos', 
+    img: '/Logos Proyectos finalizados/Gambos.jpeg',
+    url: 'https://gambos-costa-rica-peach.vercel.app/' 
   },
 ];
 
@@ -107,8 +112,8 @@ const PortfolioMarquee = () => {
 
       <div className="container portfolio-content">
         <div className="portfolio-header">
-          <h2>Proyectos Destacados</h2>
-          <p>Confían en nosotros para transformar su presencia digital</p>
+          <h2>Negocios que ya confían en nosotros</h2>
+          <p>De ferreterías y barberías a cabañas: 8 negocios en Costa Rica.</p>
         </div>
       </div>
       

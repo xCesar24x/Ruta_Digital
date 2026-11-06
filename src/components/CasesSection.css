@@ -1,0 +1,162 @@
+/* ==========================================================================
+   CASES: problem -> what we did -> result, per client
+   ========================================================================== */
+
+.cases-section {
+  position: relative;
+  padding: 7rem 0;
+  background-color: var(--bg-color);
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.case-card.glass-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(14, 18, 15, 0.72);
+}
+
+.case-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.case-logo {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  padding: 6px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.case-name {
+  margin: 0 0 0.15rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.case-meta {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.case-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4ade80;
+}
+
+.case-block p,
+.case-block li {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d1d5db;
+}
+
+.case-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.case-block li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.case-block li svg {
+  flex-shrink: 0;
+  margin-top: 0.18rem;
+  color: #22c55e;
+}
+
+/* Result is the proof: pinned low and given the most weight */
+.case-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: auto;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.14) 0%, rgba(34, 197, 94, 0.04) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.case-result-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.case-result-value .is-placeholder {
+  font-size: 1.1rem;
+}
+
+.case-result-label {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+.case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  align-self: flex-start;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #4ade80;
+  text-decoration: none;
+}
+
+.case-link svg {
+  transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case-link:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .cases-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .cases-section {
+    padding: 4.5rem 0;
+  }
+
+  .case-card.glass-card {
+    padding: 1.25rem;
+  }
+}

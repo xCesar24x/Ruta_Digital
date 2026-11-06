@@ -23,18 +23,17 @@ export const lockScroll = () => {
 
 export const unlockScroll = () => {
   if (lenisInstance) lenisInstance.start();
-  else document.documentElement.style.overflow = '';
+  // Always clear: the lock may have happened before Lenis existed
+  document.documentElement.style.overflow = '';
 };
 
+// Targets that need to clear the fixed header set scroll-margin-top in CSS;
+// both Lenis and native scrollIntoView respect it.
 export const scrollToId = (id) => {
   const element = document.getElementById(id);
   if (!element) return;
   if (lenisInstance) lenisInstance.scrollTo(element);
   else element.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-};
-
-export const openBooking = (service) => {
-  window.dispatchEvent(new CustomEvent('open-booking-modal', { detail: service ? { service } : undefined }));
 };
 
 // Section heading "condensation" reveal. Only blur, opacity and transform:
